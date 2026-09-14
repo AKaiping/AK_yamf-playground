@@ -29,26 +29,38 @@ classes:
         description:
           The company, research group or individual who built or manufactured
           this hardware.
+        annotations:
+          recommended_in_methods: true
       model:
         description:
           The Model name or any other designation the Manufacturer uses for this
           component.
+        annotations:
+          recommended_in_methods: true
       catalog_number:
         description:
           The Catalog, Part of Serial Number used by the Manufacturer to
           uniquely identify this component.
+        annotations:
+          recommended_in_methods: true
       lot_number:
         description:
           The Lot Number used by the Manufacturer to refer to a specific
           production batch or lot for this component.
+        annotations:
+          limi_tier: 3
       map_annotations:
         description: Arbitrary key/value pair annotations.
+        annotations:
+          limi_tier: 3
         range: LiMiMapAnnotation
         multivalued: true
       specs_files:
         description:
           A PDF file that contains the specifications for this hardware
           component as provided by the Manufacturer.
+        annotations:
+          limi_tier: 3
         range: LiMiFileAnnotation
         multivalued: true
         inlined: true
@@ -56,6 +68,8 @@ classes:
       additional_vendor_information:
         description:
           Vendor-specific additional information about this component.
+        annotations:
+          limi_tier: 3
         comments:
           - This attribute is intended as a last-resort solution to capture
             information that cannot be captured using any other available model
@@ -145,6 +159,8 @@ classes:
     attributes:
       type:
         description: The general category to which this Microscope belongs.
+        annotations:
+          recommended_in_methods: true
         range: LiMiMicroscopeType
         required: true
         notes:
@@ -152,10 +168,14 @@ classes:
             of the MicroscopeStand?
       origin:
         description: The origin of this microscope stand.
+        annotations:
+          recommended_in_methods: true
         range: LiMiMicroscopeOriginType
       eyepiece_field_number:
         description:
           The diaphragm size of the Microscope eyepiece expressed in mm.
+        annotations:
+          limi_tier: 3
         range: float
 
   LiMiInvertedMicroscope:
