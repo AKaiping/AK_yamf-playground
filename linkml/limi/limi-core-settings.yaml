@@ -25,35 +25,6 @@ classes:
         MapAnnotation, SpecsFile, and AdditionalVendorInformation.
     is_a: LiMiObject
 
-  LiMiExperiment:
-    description: The experiment during which an Image was acquired.
-    is_a: LiMiObject
-    slots:
-      - id
-      - name
-    attributes:
-      # Arnica to fill
-
-  LiMiSample:
-    description: The Sample that was imaged in an Experiment.
-    notes:
-      - The attributes for this class are described in a separate mixin because
-        the entire class is defined across several LiMi modules.
-    is_a: LiMiObject
-    mixins:
-      - LiMiSampleCoreMixin
-    extra_slots:
-      allowed: true
-
-  LiMiSampleCoreMixin:
-    description: Core-level attributes for the LiMiSample class.
-    mixin: true
-    slots:
-      - id
-      - name
-    attributes:
-      # Arnica to fill
-
   LiMiImage:
     description: The actual Image that was acquired and its meta-data.
     notes:
