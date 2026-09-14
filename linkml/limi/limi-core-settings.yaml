@@ -1,6 +1,6 @@
 id: https://example.invalid/limi/v02-10/core/settings
 name: limi-core-settings
-title: LLiMi Core Schema – Acquisition Settings Specifications
+title: LiMi Core Schema – Acquisition Settings Specifications
 description: >-
   This schema is part of the set of LinkML schemas for the QUAREP Light
   Microscopy Model (hereafter referred to as “LiMi model”).

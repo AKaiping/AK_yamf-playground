@@ -1,0 +1,76 @@
+id: https://example.invalid/limi/v02-10/core/experiments/
+name: limi-core-experiments
+title: LiMi Core Schema – Experiment Specifications
+description: >-
+  This schema is part of the set of LinkML schemas for the QUAREP Light
+  Microscopy Model (hereafter referred to as “LiMi model”).
+
+  It defines the entities that belong to the “Experiment” section of the “Core
+  module” of the LiMi model.
+notes:
+  - This schema is not intended to be used on its own. Use limi-core instead.
+created_by: orcid:0000-0002-6095-8718
+
+prefixes:
+  limi: https://example.invalid/limi/v02-10/
+  orcid: https://orcid.org/
+default_prefix: limi
+default_range: string
+
+classes:
+  LiMiExperimenter:
+    description: A person who performed an imaging experiment.
+    notes:
+      - FIXME It is unclear whether this class is actually desired. The LiMi
+        model’s spreadsheets do not define it, but many elements in there do
+        have an “ExperimenterRef”, which is supposed to reference an
+        “Experimenter” that has been described elsewhere. Those references seem
+        like another remnant of the OME model. For what it’s worth, my take is
+        that, if references to persons are still deemed useful, they should be
+        done using externally defined identifiers (typically ORCIDs) and NOT
+        using a class like this one.
+    slots:
+      - id
+    attributes:
+      first_name:
+        description:
+          First name, sometimes called christian name or given name or forename.
+      last_name:
+        description: Last name, sometimes called surname or family name.
+      middle_name:
+        description: Any other names.
+      email:
+        description: The person’s email address.
+      user_name:
+        description: The person’s user name (in a Unix or database sense).
+      institution:
+        description: The organizing structure the person belongs to.
+
+  LiMiExperiment:
+    description: The experiment during which an Image was acquired.
+    is_a: LiMiObject
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  LiMiSample:
+    description: The Sample that was imaged in an Experiment.
+    notes:
+      - The attributes for this class are described in a separate mixin because
+        the entire class is defined across several LiMi modules.
+    is_a: LiMiObject
+    mixins:
+      - LiMiSampleCoreMixin
+    extra_slots:
+      allowed: true
+
+  LiMiSampleCoreMixin:
+    description: Core-level attributes for the LiMiSample class.
+    mixin: true
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
