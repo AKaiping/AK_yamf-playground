@@ -45,6 +45,14 @@ classes:
         description: Arbitrary key/value pair annotations.
         range: LiMiMapAnnotation
         multivalued: true
+      specs_files:
+        description:
+          A PDF file that contains the specifications for this hardware
+          component as provided by the Manufacturer.
+        range: LiMiFileAnnotation
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       additional_vendor_information:
         description:
           Vendor-specific additional information about this component.
@@ -371,10 +379,8 @@ classes:
       wavelength_profile_file:
         description:
           A file containing the Wavelength profile of this hardware component.
-        notes:
-          - FIXME The model describes that as a "File Annotation", which is
-            quite a OMERO-specific concept. We need a mechanism to allow either
-            storing arbitrary data or referring to external files.
+        range: LiMiFileAnnotation
+        inlined: true
 
   LiMiIlluminationWavelengthRange:
     description:

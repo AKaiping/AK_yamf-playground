@@ -91,6 +91,8 @@ classes:
     attributes:
       compression:
         description: The compression scheme used to encode this data, if any.
+        range: LiMiCompression
+        ifabsent: LiMiCompression(none)
       value:
         description: The binary blob itself.
         range: LiMiBase64Binary
@@ -105,3 +107,20 @@ types:
       - https://github.com/linkml/linkml/issues/3977
     uri: xsd:base64Binary
     typeof: string
+
+  LiMiHexBinary:
+    description:
+      A blob of arbitrary binary data, serialized as a hexadecimal
+      (Base16-encoded) string.
+    notes:
+      - Ideally this should be a builtin type in LinkML.
+    uri: xsd:hexBinary
+    typeof: string
+
+enums:
+  LiMiCompression:
+    description: Available compression schemes.
+    permissible_values:
+      zlib:
+      bzip2:
+      none:

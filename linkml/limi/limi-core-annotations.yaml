@@ -58,3 +58,47 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: false
+
+  LiMiFileAnnotation:
+    description: An annotation represented by an arbitrary file.
+    notes:
+      - FIXME The original OME model mandates that both `external` and
+        `bin_data` must be present, which seems odd to me. I believe it should
+        be "one of the two at least" must be present?
+    is_a: LiMiAnnotation
+    attributes:
+      filename:
+        description: The name of the file.
+        required: true
+      size:
+        description: Size of the uncompressed file, in bytes.
+        range: integer
+        minimum_value: 0
+        required: true
+      mime_type:
+        description: The MIME type of the file.
+      external:
+        description: A reference to a remote location
+        range: LiMiExternalFileReference
+      bin_data:
+        description: The contents of the file.
+        range: LiMiBase64Binary
+
+  LiMiExternalFileReference:
+    description: A reference to a file stored externally.
+    is_a: LiMiObject
+    attributes:
+      href:
+        description: The remote location of the file
+        range: uri
+        required: true
+      sha1:
+        description: The SHA1 digest of the remote file.
+        notes:
+          - FIXME We should migrate that to a more modern hash and/or allow
+            different hash algorithms instead of hardcoding one.
+        required: true
+        range: LiMiHexBinary
+      compression:
+        description: The compression scheme used to encode the remote data.
+        range: LiMiCompression
