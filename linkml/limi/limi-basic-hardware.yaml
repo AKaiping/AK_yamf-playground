@@ -53,6 +53,16 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+      table:
+        description: The Table used to support this Instrument.
+        range: LiMiMicroscopeTable
+        inlined: true
+      environmental_control_devices:
+        description: Environmental Control Devices available on this Instrument.
+        range: LiMiEnvironmentalControlDevice
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
 
   #####################
   # Microscope stands #
@@ -138,3 +148,298 @@ classes:
       A commercial or open-source software module utilized for any Image
       Acquisition, or Quality Control task.
     is_a: LiMiSoftware
+
+  ####################
+  # Microscope table #
+  ####################
+
+  LiMiMicroscopeTable:
+    description:
+      The Table used to support the Instrument during Image Acquisition.
+    is_a: LiMiManufacturerSpecs
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  ################################
+  # Environmental control device #
+  ################################
+
+  LiMiEnvironmentalControlDevice:
+    description:
+      An Environmental Control Device available on an Instrument to maintain a
+      controlled Image Environment during Image Acquisition.
+    is_a: LiMiManufacturerSpecs
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  #################
+  # Light sources #
+  #################
+
+  LiMiMultiLaserEngine:
+    description:
+      A Light Source device that contains multiple Lasers built into a single
+      box.
+    is_a: LiMiLightSource
+    attributes:
+      single_mode:
+        description:
+          Whether the output mode of this Multi Laser Engine is single-mode
+          (true) or multi-mode (false).
+        annotations:
+          limi_tier: 2
+        range: boolean
+      number_of_lasers:
+        description:
+          The number of lasers lines associated with this Multi Laser Engine.
+        annotations:
+          limi_tier: 2
+        range: integer
+        notes:
+          - DGG Should not really be needed, as the number can be inferred by
+            the number of references in the `lasers` attribute?
+      output_port_number:
+        description:
+          The number of Light Guide ports used as output by this Multi Laser
+          Engine.
+        annotations:
+          limi_tier: 3
+        range: integer
+      multiport_switch_time:
+        description:
+          The time it takes for this Multi Laser Engine to switch between Laser
+          lines.
+        annotations:
+          limi_tier: 3
+        range: float
+      multiport_switch_time_unit:
+        description: Unit associated with the Multiport Switch Time value.
+        annotations:
+          limi_tier: 3
+        range: LiMiTimeUnit
+      lasers:
+        description: The Lasers contained in this Multi Laser Engine.
+        range: LiMiLaser
+        multivalued: true
+        inlined: false
+
+  #########################
+  # Light source coupling #
+  #########################
+
+  LiMiLightSourceCoupling:
+    description:
+      A device or method used to couple an available Light Source with a
+      Microscope Stand to transfer light to the specimen.
+    notes:
+      - DGG There does not seem to be a way to associate a light source with a
+        light source coupling?
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiLightGuide:
+    description:
+      A Light Guide coupling between the Light Source and the Microscope Stand
+      generally consists of a casing enclosing a medium (i.e., typically fiber
+      optic) capable of transferring light from the illuminator to the back of
+      the Microscope Stand.
+    is_a: LiMiLightSourceCoupling
+    attributes:
+      # Arnica to fill
+
+  LiMiFreeBeam:
+    description:
+      A Free Beam coupling between the Light Source and the Microscope Stand
+      consists of either a direct mount or an optical path that directs light
+      across free space to the back of the Microscope Stand.
+    is_a: LiMiLightSourceCoupling
+    attributes:
+      # Arnica to fill
+
+  #################
+  # Optics holder #
+  #################
+
+  LiMiOpticsHolder:
+    description:
+      A Holder for Filters, Dichroic, and other Optical Element that is
+      associated with an Instrument.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      motorized:
+        description:
+          Whether this device is Motor (true) or Manually (false) operated.
+        annotations:
+          limi_tier: 3
+        range: boolean
+      response_time:
+        description:
+          The time it takes for this Optics Holder to switch from one position
+          to another.
+        annotations:
+          limi_tier: 3
+        range: float
+      response_time_unit:
+        description: Unit associated with the Response Time value.
+        annotations:
+          limi_tier: 3
+        range: LiMiTimeUnit
+      nr_of_slots:
+        description: How many Slots this Optics Holder has.
+        annotations:
+          limi_tier: 2
+        notes:
+          - DGG Attributes are inconsistently named (some are "number_of_X",
+            others, like this one, are "nr_of_X", while some others yet are
+            "X_number").
+        range: integer
+
+  LiMiFilterCube:
+    description:
+      A removable cube-shaped unit that contains the filters and mirror used in
+      epifluorescence microscopy to separate fluorescence excitation and
+      emission light.
+    is_a: LiMiOpticsHolder
+    attributes:
+      excitation_filter:
+        description:
+          An available Excitation Filter which is part of this Filter Cube.
+        range: LiMiExcitationFilter
+        inlined: false
+      standard_dichroic:
+        description:
+          An available Dichroic Mirror which is part of this Filter Cube.
+        range: LiMiDichroic
+        inlined: false
+        required: true
+      emission_filter:
+        description:
+          An available Emission Filter which is part of this Filter Cube.
+        range: LiMiEmissionFilter
+        inlined: false
+      optics_holder_position:
+        description: The position of this Filter Cube in a Optics Holder.
+
+  LiMiFilterCubeTurret:
+    description: A circular holder for multiple Filter Cubes.
+    is_a: LiMiOpticsHolder
+    attributes:
+      filter_cubes:
+        description:
+          Available filter cubes which are housed in this Optics Holder.
+        notes:
+          - DGG Do we really want a reference here? This means that each filter
+            cube must first be listed directly under Instrument, and then
+            referenced from here. It would be easier to list the filters
+            directly under their housing turret.
+        range: LiMiFilterCube
+        multivalued: true
+        inlined: false
+
+  LiMiFilterWheel:
+    description: A circular holder for multiple individual Filters or Dichroics.
+    is_a: LiMiOpticsHolder
+
+  LiMiExcitationFilterWheel:
+    description: A circular holder for multiple individual Excitation Filters.
+    is_a: LiMiFilterWheel
+    attributes:
+      excitation_filters:
+        description:
+          Available excitation filters which are part of this Optics Holder.
+        range: LiMiExcitationFilter
+        multivalued: true
+        inlined: false
+
+  LiMiDichroicFilterWheel:
+    description: A circular holder for multiple individual Dichroics.
+    is_a: LiMiFilterWheel
+    attributes:
+      standard_dichroics:
+        description:
+          Available Dichroic Mirrors which are part of this Optics Holder.
+        range: LiMiDichroic
+        multivalued: true
+        inlined: false
+
+  LiMiEmissionFilterWheel:
+    description: A circular holder for multiple invidual Emission Filters.
+    is_a: LiMiFilterWheel
+    attributes:
+      emission_filters:
+        description:
+          Available emission filters which are part of this Optics Holder.
+        range: LiMiEmissionFilter
+        multivalued: true
+        inlined: false
+
+  LiMiFilterSlider:
+    description: A linear holder for multiple individual Filters or Dichroics.
+    is_a: LiMiOpticsHolder
+
+  LiMiExcitationFilterSlider:
+    description: A linear holder for multiple individual Excitation Filters.
+    is_a: LiMiFilterSlider
+    attributes:
+      excitation_filters:
+        description:
+          Available excitation filters which are part of this Optics Holder.
+        range: LiMiExcitationFilter
+        multivalued: true
+        inlined: false
+
+  LiMiDichroicFilterSlider:
+    description: A linear holder for multiple individual Dichroics.
+    is_a: LiMiFilterSlider
+    attributes:
+      standard_dichroics:
+        description:
+          Available Dichroic Mirrors which are part of this Optics Holder.
+        range: LiMiDichroic
+        multivalued: true
+        inlined: false
+
+  LiMiEmissionFilterSlider:
+    description: A linear holder for multiple invidual Emission Filters.
+    is_a: LiMiFilterSlider
+    attributes:
+      emission_filters:
+        description:
+          Available emission filters which are part of this Optics Holder.
+        range: LiMiEmissionFilter
+        multivalued: true
+        inlined: false
+
+  LiMiOpticsTurret:
+    description: A circular holder for multiple optical elements.
+    is_a: LiMiOpticsHolder
+    attributes:
+      optical_apertures:
+      filters:
+        description: Available filters which are housed in this Optics Holder.
+        range: LiMiFilter
+        multivalued: true
+        inlined: false
+      mirroring_devices:
+      lenses:
+      prisms:
+      polarization_optics:
