@@ -21,6 +21,7 @@ classes:
   LiMiManufacturerSpecs:
     description:
       This describes the Manufacturer specifications for a hardware component.
+    # This describes the Manufacturer specifications for this component (i.e., Manufacturer Name, Model designation and Catalog Number).
     notes:
       - This is the base class for most classes in this schema.
     is_a: LiMiObject
@@ -29,28 +30,33 @@ classes:
         description:
           The company, research group or individual who built or manufactured
           this hardware.
+        #This field refers to the company, research group or individual who built or manufactured this hardware component.
         annotations:
           recommended_in_methods: true
       model:
         description:
           The Model name or any other designation the Manufacturer uses for this
           component.
+        #This field refers to the Model name or any other designation the Manufacturer uses for this component.
         annotations:
           recommended_in_methods: true
       catalog_number:
         description:
           The Catalog, Part of Serial Number used by the Manufacturer to
           uniquely identify this component.
+        #This field records the Catalog, Part or Serial Number used by the Manufacturer to uniquely identify this component.
         annotations:
           recommended_in_methods: true
       lot_number:
         description:
           The Lot Number used by the Manufacturer to refer to a specific
           production batch or lot for this component.
+        #The Lot Number used by the Manufacturer to refer to a specific production batch or lot for this component.
         annotations:
           limi_tier: 3
       map_annotations:
         description: Arbitrary key/value pair annotations.
+        #AK didnt check
         annotations:
           limi_tier: 3
         range: LiMiMapAnnotation
@@ -59,6 +65,7 @@ classes:
         description:
           A PDF file that contains the specifications for this hardware
           component as provided by the Manufacturer.
+        #This element refers to a PDF file that contains the specifications for this hardware component as provided by the Manufacturer.
         annotations:
           limi_tier: 3
         range: LiMiFileAnnotation
@@ -74,6 +81,7 @@ classes:
           - This attribute is intended as a last-resort solution to capture
             information that cannot be captured using any other available model
             elements or the map annotation feature.
+          #This element is intended to be used as a last-resort solution to capture vendor-specific Additional Information about this hardware component, which cannot be described using either available model elements (Classes or Attributes) or the Map Annotation feature of the schema. The use of this feature should not be intended as a way to hide information that the Imaging Community has designated as essential to ensure rigor and reproducibility. In case this feature is used, the Vendor is fully responsible for this information, including but not limited to, making sure this information is appropriately recorded and kept up to date.
         range: LiMiAdditionalVendorInformation
         inlined: true
 
@@ -89,6 +97,7 @@ classes:
       bin_data:
         description:
           The additional information, as a blob of arbitrary raw data.
+        #AK did not check properly
         range: LiMiBase64Binary
 
   LiMiInstrument:
@@ -96,6 +105,7 @@ classes:
       This class describes the Instrument used to capture an image. It is
       primarily a container referring to the list of hardware components in a
       given Microscope.
+    #This element describes the Instrument used to capture the Image. It is primarily a container referring to the list of hardware components included in a given Microscope. The list consists of the Microscope Stand, Microscope Table, Light Source, Light Source Coupling, Sample Holder, Focusing, Objective, Filter, Dichroic, Additional Lens (including a commonly used Magnification Changer, also known as Optovar), Additional Mirroring Device, Polarization Optics, Prism, Optical Aperture, Optical Device, Detector and Calibration Tool. The Filter element can be either composed of separate Excitation, Emission filters, and Dichroic mirrors or a single Filter Set. An Instrument might have multiple Light Sources, Detectors, Objectives, and Filters, etc. Each of these has its own ID attribute, which can be referred to from the Image, Plane or more commonly Channel elements associated with a given Image Acquisition session. It is understood that the Light Path configuration can be different for each Channel, but cannot be different for each timepoint or each Plane of an XYZ stack.
     notes:
       - The attributes for this class are described in a separate mixin because
         the entire class is defined across several LiMi modules.
@@ -118,6 +128,7 @@ classes:
         description:
           The core structure of this Instrument, which might also be referred to
           as its Body.
+        #The core structure of this Microscope, which might also be referred to as Body, Frame, or Platform.
         range: LiMiMicroscopeStand
         required: true
         multivalued: true
@@ -151,6 +162,7 @@ classes:
 
   LiMiMicroscopeStand:
     description: The core structure of a Microscope.
+    #The core structure of this Microscope, which might also be referred to as Body, Frame, or Platform.
     is_a: LiMiManufacturerSpecs
     slots:
       - id
@@ -159,6 +171,7 @@ classes:
     attributes:
       type:
         description: The general category to which this Microscope belongs.
+        #The general category to which this Microscope belongs. Options include a Compound Microscope is a Microscope in which the primary image is generated by an objective or an objective and a tube-lens, and in which the Sample is observed through an eyepiece. A Custom Microscope is specially designed for specialized purposes. An Electrophysiology Microscope is a Microscope dedicated to electrophysiological observation and manipulation. A Lightsheet Microscope is a Microscope in which in contrast to epifluorescence microscopy only a thin slice (usually a few hundred nanometers to a few micrometers) of the sample is illuminated perpendicularly to the direction of observation. A Stereo Microscope (also known as Dissecting Microscope) is a low-power, binocular Microscope with long free working distance used for dissecting. Generally in this type of Microscope the object is observed by each eye from a slightly different angle, thus causing stereoscopic perception.
         annotations:
           recommended_in_methods: true
         range: LiMiMicroscopeType
@@ -168,18 +181,21 @@ classes:
             of the MicroscopeStand?
       origin:
         description: The origin of this microscope stand.
+        #This describes the origin of this microscope stand. Specifically it specifies whether this Microscope Stand was purchased from a Commercial vendor and is being used as-is (i.e., Commercial- as is), purchased from a Commercial vendor and subsequently Modified for a specialized application (i.e., Commercial- custom-modified) or entirely Custom-built from scratch (i.e., Custom-built).
         annotations:
           recommended_in_methods: true
         range: LiMiMicroscopeOriginType
       eyepiece_field_number:
         description:
           The diaphragm size of the Microscope eyepiece expressed in mm.
+        #The Field Number represents the diaphragm size of the Microscope eyepiece expressed in mm.
         annotations:
           limi_tier: 3
         range: float
 
   LiMiInvertedMicroscope:
     description: An inverted Microscope Stand.
+    #This is a Microscope in which the object is observed from beneath the stage.
     is_a: LiMiMicroscopeStand
 
   #################
@@ -188,6 +204,7 @@ classes:
 
   LiMiLightSource:
     description: A Light Source on an Instrument.
+    #This element describes one or more Light Source(s) available for this Instrument.  An Instrument may have several Light Sources of different types (Laser, Light Emitting Diode, Filament, Arc etc.). A typical fluorescence Microscope has two Light Sources, one for Transmitted light and one for Fluorescence light.
     is_a: LiMiManufacturerSpecs
     slots:
       - id
@@ -195,18 +212,21 @@ classes:
       - object_type
     attributes:
       purchase_date:
-        description: The Date in which this Light Source was purchased.
+        description: The Date on which this Light Source was purchased.
+        #This field records the Date in which this Light Source was purchased.
         range: date
       illumination_power_reporting_statistic:
         description:
           The statistic used by the Manufacturer to report the nominal
           illumination power output emitted by this Light Source at Peak
           Wavelength.
+        #This field reports the statistic used by the Manufacturer to report the nominal Illumination Power output emitted by this Light Source at Peak Wavelength.
         range: LiMiIlluminationPowerReportingStatistic
       illumination_power_reporting_position:
         description:
           The position where the reported Illumination Intensity value was
           obtained as reported by the Manufacturer.
+        #This field records the Position where the reported Illumination Intensity value was obtained as reported by the Manufacturer.
         range: LiMiIlluminationPowerReportingPosition
 
   LiMiArc:
@@ -217,6 +237,7 @@ classes:
       an inert gas in in a glass bulb. The inert gas can be Mercury (He), Xenon
       (Xe), or a mixture of the two. The choice of the gas is important because
       its nature determines the spectral behavior of the lamp.
+    #An Arc lamp is a discharge lamp that produces light by an electric arc (also called a voltaic arc), which is typically generated between metal electrodes and travels through an inert gas in a glass bulb. The inert gas can be Mercury (He), Xenon (Xe), or a mixture of the two. The choice of the gas is important because its nature determines the spectral behavior of the lamp. Refer to Type for more informations about this aspect.
     is_a: LiMiLightSource
     attributes:
       type:
@@ -240,6 +261,7 @@ classes:
     attributes:
       type:
         description: The type of Filament lamp Light Source.
+        #This field records the type of Filament lamp Light Source. A Halogen lamp is a Filament lamp whose envelope contains halogen vapor, which reduces the loss of tungsten from the filament. This, in turn, allows to reach a high filament temperature and consequent higher luminance, higher color temperature, and longer operating life than a Standard Filament lamp of the same input power.
         range: LiMiFilamentType
       illumination_wavelength_ranges:
         description:
@@ -253,18 +275,20 @@ classes:
       A Light Source which emits coherent radiation at high spectral
       concentrations of radiance and minimal solid angles. This includes proper
       Light Amplification by Stimulated Emission of Radiation (LASER) sources
-      that emig light through a process of optical amplification based on the
-      stimulated emisssion of electromagnetic radiations. It also includes
+      that emit light through a process of optical amplification based on the
+      stimulated emission of electromagnetic radiations. It also includes
       Optical Parametric Oscillator (OPO) sources that uses a kind of LASER
       resonator but based on optical gain from parametric amplification in a
-      nonlinear crystal rather than from stimulated emision.
+      nonlinear crystal rather than from stimulated emission.
     is_a: LiMiLightSource
     attributes:
       type:
         description: The general category of the laser.
+        # The general category of the laser used for this experiment (e.g., Semiconductor Laser Diode, Solid state, Gas, etc.).
         range: LiMiLaserType
       tunable:
         description: Whether this Laser is Tuneable to different Wavelengths.
+        # Whether (True) or not (False) this Laser is Tuneable to different Wavelengths
         range: boolean
       pulse:
         description:
@@ -273,9 +297,11 @@ classes:
         range: boolean
       laser_medium:
         description: The material out of which this Laser is constructed.
+        # This field captures the material out of which this Laser is constructed.
         range: LiMiLaserMedium
       is_pumped:
         description: Whether this Laser is a pumped Laser.
+        # Whether (True) or not (False) this is a pumped Laser.
         range: boolean
       repetition_rate:
         description:
@@ -464,6 +490,11 @@ classes:
           is not "Air", the actual Immersion Liquid that was used during the
           Acquisition of a specific Image must be specified in Objective
           Settings.
+          ####################
+          #AK: This description is a subset of the one in the spreadsheet
+          #NBO_MicroscopyMetadataSpecifications_ALL_v02-10
+          ####################
+
         range: LiMiImmersionType
       working_distance:
         description:
@@ -548,6 +579,7 @@ classes:
           The maximal diameter of the view field allowed by this Objective,
           expressed in mm, and measured at the intermediate image plane.
         range: float
+        ##AK: why not define default unit here##
       image_distance:
         description:
           The distance in air between the rear principal plane of this Objective
@@ -586,7 +618,7 @@ classes:
         ifabsent: LiMiLengthUnit(mm)
 
   ###########
-  # Filters #
+  # Filters AK Test #
   ###########
 
   LiMiFilter:
@@ -602,7 +634,68 @@ classes:
       - name
       - object_type
     attributes:
-      # Arnica to fill
+      type:
+        #AK wants to rename this to filter_type-
+        description: This field captures the Type of Filter used in this Instrument.
+        range: FilterType
+        required: true
+
+      filter_holder_position:
+        description: This field records the position of this element in a Filter Holder of any kind, such as a Filter Slider, Turret or Wheel.
+        range: integer
+
+      coating_method:
+        description: This field records the type of Coating used in this case. An optical coating is one or more thin layers of material deposited on an optical component such as a Lens, Filter or Mirror, which alters the way in which the optic reflects and transmits light.
+        range: CoatingMethod
+        required: true
+
+      light_path_location:
+        description: This field records the location of this component in the Microscope Light Path.
+        range: LightPathLocation
+        required: true
+
+      technology:
+        description: This field records the filtering Technology utilized for this optical element. The main types of technologies used in fluorescence analysis are Absorption (aka colored) glass, Polymer or Thin-film coating.
+        range: FilterTechnology
+
+      attenuation_method:
+        description: This field records the means by which this optical element achieves out-of-band transmission attenuation.
+        range: AttenuationMethod
+        required: true
+
+      attenuation_coefficient:
+        description: This field records the Attenuation Coefficient (AC) of this optical element. The AC (aka blocking coefficient) is a material property that characterizes the degree to which light is being blocked (i.e., scattered or absorbed) by it. AC is used as a measure of the out-of-band blocking of an optical Lens, Filter, Dichroic mirror over an extended range of the spectrum. AC is often reported in units of optical density (OD), whereas OD= -log10(T), and T=Transmittance (0≤T≤1).
+        range: float
+
+      diameter:
+        description: This field describes the Diameter of this optical element
+        range: float
+      #AK: should we define this and all measures of distance as a slot, then we can also make a rule that a unit should be present if a value is present?
+      diameter_unit:
+        description: unit associated with the filter diameter
+        range: LiMiLengthUnit
+
+      thickness:
+        description: This field describes the Thickness of this optical element
+        range: float
+      thickness_unit:
+        description: unit associated with the filter thickness
+        range: LiMiLengthUnit
+
+      angle_of_incidence:
+        description: This field records the optimal angle of incidence (AOI) for this Filter. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection, AOI is by definition equal to the Angle Of Reflection (AOR).
+        range: float
+      angle_of_incidence_unit:
+        description: unit associated with the filter angle_of_incidence
+        #AK: this is not included in the model but SHOULD be
+        range: LiMiAngleUnit
+      #Ak:LiMiAngleUnit should be defined with enums degree, radian, steradian
+
+      polarization:
+        description: This field records the polarization effect of this optical element. Any thin-film interference Coating that is used at non-normal angles-of-incidence will cause some amount of polarization, the precise effect varying greatly with wavelength and with the particular Coating design.
+        range: Polarization
+
+
 
   LiMiExcitationFilter:
     description:
@@ -658,15 +751,16 @@ classes:
         maximum_value: 1.0
       FWHM_bandwidth:
         description:
-          The width of this Transmittance Range. Specifcally, the Full Width at
+          The width of this Transmittance Range. Specifically, the Full Width at
           Half Maximum (FWHM) represents the bandwidth of the Wavelength
-          spectrum curve mesured between those points whose transmission
+          spectrum curve measured between those points whose transmission
           amplitude is 50% of the maximum.
         range: float
         minimum_value: 0.0
       FWHM_bandwidth_unit:
         description: Unit associated with the FWHM Bandwidth value.
         range: LiMiLengthUnit
+ ## AK: we miss the transmittance profile file ##
 
   ############
   # Detector #
