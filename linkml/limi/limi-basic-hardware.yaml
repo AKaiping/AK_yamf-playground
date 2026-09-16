@@ -434,12 +434,485 @@ classes:
     is_a: LiMiOpticsHolder
     attributes:
       optical_apertures:
+        description:
+          Available optical apertures which are housed in this Optics Holder.
+        range: LiMiOpticalAperture
+        multivalued: true
+        inlined: false
       filters:
         description: Available filters which are housed in this Optics Holder.
         range: LiMiFilter
         multivalued: true
         inlined: false
       mirroring_devices:
+        description:
+          Available mirroring devices which are housed in this Optics Holder.
+        range: LiMiMirroringDevice
+        multivalued: true
+        inlined: false
       lenses:
+        description: Available lenses which are housed in this Optics Holder.
+        range: LiMiLens
+        multivalued: true
+        inlined: false
       prisms:
+        description: Available prisms which are housed in this Optics Holder.
+        range: LiMiPrism
+        multivalued: true
+        inlined: false
       polarization_optics:
+        description:
+          Available polarization optics which are housed in this Optics Holder.
+        range: LiMiPolarizationOptics
+        multivalued: true
+        inlined: false
+
+  #####################
+  # Mirroring devices #
+  #####################
+
+  LiMiMirroringDevice:
+    description:
+      A Mirror positioned in the Light Path for one or more Channels available
+      on an Instrument.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiDichroic:
+    description:
+      A Mirror that spectrally separate light by transmitting and reflecting
+      light as a function of wavelength. In the context of fluorescence
+      microscopy, they are typically used to reflect the excitation light, but
+      transmit the emitted fluorescence.
+    comments:
+      - Dichroic mirrors are also often referred to as Dichroic Beamsplitters,
+        Dichromatic Mirrors or simply Dichroics.
+    is_a: LiMiMirroringDevice
+    attributes:
+      # Arnica to fill
+
+  LiMiStandardDichroic:
+    description:
+      A Dichroic positioned in the standard Ligth Path for one or more Channels
+      available for an Instrument.
+    is_a: LiMiDichroic
+
+  LiMiAdditionalDichroic:
+    description:
+      A generic Additional Dichroic positioned in the Ligth Path for one or more
+      Channel available for an Instrument.
+    is_a: LiMiDichroic
+
+  LiMiReflectanceRange:
+    description:
+      The Range (also known as the Band) of Wavelengths that are reflected by a
+      Dichroic Mirror.
+    is_a: LiMiObject
+    attributes:
+      wavelength:
+        description:
+          The key Wavelength that characterizes this Reflectance Range (also
+          known as Reflection band). In most cases, Wavelength refers to the
+          CutOn Wavelength (i.e., below which there is less than 50%
+          transmittance) but it might also refer to the CutOff wavelength (i.e.,
+          above which there is less than 50% transmittance) or the Center
+          Wavelength of the Reflectance Band.
+        range: float
+      wavelength_unit:
+        description: Unit associated with the Wavelength value.
+        range: LiMiLengthUnit
+      reflectance:
+        description:
+          The maximum amount of light this optical component is capable of
+          reflecting in this Wavelength Range, at the peak Wavelength.
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      FWHM_bandwidth:
+        description:
+          The width of this Reflectance Range (also known as Reflection band).
+          Specifically, the Full Width at Half Maximum (FWHM) represents the
+          bandwidth of the Wavelength spectrum curve measured between those
+          points whose transmission amplitude is 50% of the maximum.
+        range: float
+        minimum_value: 0.0
+      FWHM_bandwidth_unit:
+        description: Unit associated with the FWHM Bandwith value.
+        range: LiMiLengthUnit
+
+  LiMiBeamsplitter:
+    description:
+      A Mirror that reflects part of the light, regardless of Wavelength.
+    is_a: LiMiMirroringDevice
+    attributes:
+      # Arnica to fill
+
+  LiMiReflectingMirror:
+    description: A total reflection Mirror.
+    is_a: LiMiMirroringDevice
+    attributes:
+      # Arnica to fill
+
+  #####################
+  # Optical apertures #
+  #####################
+
+  LiMiOpticalAperture:
+    description:
+      Any mechanical, non optical device that is placed in the Light Path and
+      spatially modifies the light beam.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiDarkFieldStop:
+    description:
+      A central circular stop (i.e., opaque disk) usually used in dark-field
+      microscopy and placed in the front focal plane of a Condenser to occlude
+      all the direct light which would fall within the aperture of the
+      objective.
+    is_a: LiMiOpticalAperture
+    attributes:
+      center_stop_diameter:
+        description:
+          The physical diameter of the central disk of this Dark Field Stop.
+        range: float
+      center_stop_diameter_unit:
+        description: Unit associated with the Center Stop Diameter value.
+        range: LiMiLengthUnit
+
+  LiMiPhaseRing:
+    description:
+      An annular (ring-like) slit used to produce contrast modulation following
+      Zernike, in which the image contrast of a phase object is enhanced by
+      altering the phase and amplitude of the direct light with respect to those
+      of the diffracted light. This illuminating aperture Diaphragm is placed in
+      the front focal plane of the Condenser and acts in conjunction with an
+      appropriate phase plate, usually in the form of an annulus, placed in the
+      back focal plane of the objective (or in a succeeding plane conjugate with
+      this).
+    comments:
+      - Also called a Phase Annulus.
+    is_a: LiMiOpticalAperture
+    attributes:
+      # Arnica to fill
+
+  LiMiHoffmanPlate:
+    description:
+      A Plate that contains an off-axis slit aperture positioned in the front
+      focal plane of the Condenser. It is used alongside a Hoffman contrast
+      modulator (i.e., optical amplitude spatial filter) present in the back
+      focal plane of the objective or in a succeeding conjugate plane to produce
+      contrast modulation as described by Hoffman (i.e., Hoffman Contrast
+      Modulation, HMC). Hoffman modulation contrast is not hampered by the use
+      of birefringent materials (such as plastic Petri dishes) in the optical
+      pathway, so the technique is more useful for examining specimens in
+      containers constructed with polymeric materials.
+    is_a: LiMiOpticalAperture
+    attributes:
+      design:
+        description: The design of the slit of this Hoffman Plate.
+        range: LiMiHoffmanPlateSlitDesign
+
+  LiMiIrisDiaphragm:
+    description:
+      A Diaphragm, positioned trasversally to the optical axis bounded by
+      multiple leaves, usually metal, arranged so as to provide an opening of
+      variable size, which is adjustable by means of a mechanical control.
+    is_a: LiMiOpticalAperture
+    attributes:
+      # Arnica to fill
+
+  LiMiVarelRing:
+    description:
+      A stop (i.e., opaque structure) shaped like a ring sector, which is used
+      on the illumination side, to permit unilateral inclined illumination. It
+      was developed to work in combination with Phase Objectives to yield
+      contrast even when light passes through birefringent materials, such as
+      plastic Petri dishes.
+    is_a: LiMiOpticalAperture
+
+  LiMiShutter:
+    description:
+      A device that opens and closes, and that may be mechanically or
+      electro-mechanically controlled. Shutters are typically used to control
+      the Light that raches the sample (i.e., to limit phototoxicity and
+      photobleaching especially in case of live specimens),  or the Detecrtor at
+      any one time. They can also be used for Excitation or Emission Wavelength
+      selection.
+    is_a: LiMiOpticalAperture
+    attributes:
+      # Arnica to fill
+
+  ##########
+  # Lenses #
+  ##########
+
+  LiMiLens:
+    description:
+      An additional lense positioned in the Light Path for one or more Channels
+      available for an Instrument. A Lens is a component of glass or transparent
+      plastic material, usually circular, with two primary surfaces that are
+      ground and polished in a specific manner designed to produce either a
+      convergence or divergence of light passing through the material. An
+      Instrument may have several Lenses with different functions, such as a
+      Magnification Changer (also known as Optovar), a Coupling Lens connecting
+      the Light Source with the Microscope Stand, a Relay Lens positioned at the
+      Detector mount, or additional Lenses placed in the Light Path for various
+      purposes. This element can be associated with an optional Optics Turret.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiMagnificationChanger:
+    description:
+      A Magnification Changer provides additional magnification that can be
+      beneficial when a desired field of view is required for the imaging
+      sensor. Magnification Changers are placed before the Tube Lens within the
+      infinity space of the optical system. Typical magnification increments are
+      1.25x, 1.6x, and 2x.
+    comments:
+      - Also known as Optovar because one of the first magnification changing
+        devices was developed by Zeiss and given this proprietary name.
+    is_a: LiMiLens
+
+  LiMiGenericLens:
+    description:
+      Any additional generic Lense positioned in the Light Path for a given
+      Channel.
+    notes:
+      - DGG Should not be needed. If the exact type of lens is not known, the
+        parent LiMiLens can be used instead.
+    is_a: LiMiLens
+
+  LiMiBeamExpanderLens:
+    description:
+      A Lens designed to work in combination with other optical components to
+      form a Beam Expander device. As such, its role is to increase the diameter
+      of a collimated input beam to a larger collimated output beam.
+    is_a: LiMiLens
+
+  LiMiBeamCollimatorLens:
+    description:
+      A Lens designed to work in combination with other optical components to
+      form a Beam Collimator device. As such, its role is to transform a
+      strongly diverging light beam into a collimated beam, i.e., a beam where
+      light propagates mainly only in one direction, and the beam divergence is
+      weak.
+    is_a: LiMiLens
+
+  LiMiCondenserLens:
+    description:
+      A Condenser Lens renders a divergent beam from a point source into a
+      parallel or converging beam to illuminate an object. It acts to gather
+      light from the Light Source and concentrate it into a cone of light that
+      illuminates the specimen. The aperture and angle of the light cone must be
+      adjusted (via the size of the diaphragm) for each different objective Lens
+      with different numerical apertures. Conserser Lenses are typically housed
+      within a specific component of the Microscope called the Condenser.
+    is_a: LiMiLens
+
+  LiMiCouplingLens:
+    description:
+      A Lens positioned at the mount connecting the Light Source Coupling device
+      and the Microscope Stand.
+    is_a: LiMiLens
+
+  LiMiRelayLens:
+    description:
+      A Relay Lens is often used in combination with other Lenses for
+      transferring an Image into a different optical plane. A typical example of
+      Relay Lens is the Lens positioned at the mount connecting a Detector with
+      the Microscope Stand.
+    is_a: LiMiLens
+
+  LiMiTubeLens:
+    description:
+      A Tube Lens is an intermediate Lens, located within the Microscope's
+      Illumination Tube, which is designed to operate as an essential component
+      of infinity-corrected Objectives, and which should be regarded as an
+      integral part of the Objective lens system when magnification and
+      correction are considered. In some Microscope Tubes, Lenses might be
+      located within the Microscope Stand and might not be immediately
+      accessible.
+    is_a: LiMiLens
+
+  #######################
+  # Polarization optics #
+  #######################
+
+  LiMiPolarizationOptics:
+    description:
+      A Polarization device positioned in the Ligth Path for an Instrument. A
+      Polarization device is an optical filter rotatable through 360° that lets
+      light waves of a specific polarization pass through while blocking light
+      waves of other polarizations. This element can be associated with an
+      optional Optics Turret.
+    is_a: LiMiManufacturerSpecs
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  ##########
+  # Prisms #
+  ##########
+
+  LiMiPrism:
+    description:
+      A Prism positioned in the Light Path for one or more Channels available
+      for this Instrument. A Prism is a block of glass or other transparent
+      material with at least two intersecting flat, polished surfaces, used to
+      disperse light or deviate it through an angle. A Prism can be viewed as an
+      ensemble of different rigidly mounted Mirrors, with each face having a
+      permanent orientation with respect to others. A Prism can be employed to
+      deflect or deviate a light beam, rotate or invert an image, separate
+      polarization states, or disperse light into its component Wavelengths. An
+      Instrument may have several Prisms with different functionality such as
+      Polarizing, Reflecting, or Refracting (or Dispersing). Polarizing Prisms
+      are birefringent crystals that divide incident non-polarized light into
+      separate components polarized orthogonally to each other. Reflecting
+      Prisms are useful for redirecting light beams by total internal
+      reflection. Refracting (or Dispersing) Prisms can be employed to bend and
+      separate light into its component colors. This element can be associated
+      with an optional Optics Turret.
+    is_a: LiMiManufacturerSpecs
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  ################
+  # Stage insert #
+  ################
+
+  LiMiStageInsert:
+    description: An optional Stage Insert mounted on the Stage.
+    is_a: LiMiManufacturerSpecs
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  ##############################
+  # Sample positioning devices #
+  ##############################
+
+  LiMiSamplePositioningDevice:
+    description:
+      A Sample-Optics Positioning device available for an Instrument. An
+      Instrument may have more than one of these devices of different types. For
+      example, a typical setup might include a Mechanical Stage, a Stage Insert,
+      a Turret Objective Focusing, and a Piezoelectric Objective Focusing
+      device.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiFocusingDevice:
+    description:
+      A Focusing mechanism is used to obtain maximum sharpness in an Image by
+      changing the distance between a Sample and the optical system forming the
+      Image. In most cases, a Z-axis Focusing mechanism moves the Objective
+      along the optical axis.
+    is_a: LiMiSamplePositioningDevice
+
+  LiMiTurretObjectiveFocusingDevice:
+    description:
+      A Focusing Device associated with a rotating Objective Turret associated
+      with this Instrument. This type of device is often operated using a rack
+      and pinion mechanism.
+    is_a: LiMiFocusingDevice
+
+  LiMiIndividualObjectiveFocusingDevice:
+    description:
+      An optional objective nano-Focusing Device associated with this
+      Instrument. These devices might be driven using piezoelectric mechanisms
+      or linear motor actuators associated with crossed roller guideways. They
+      typically achieve higher precision, accuracy, and speed than traditional
+      Focusing Devices.
+    is_a: LiMiFocusingDevice
+    attributes:
+      piezo_electric:
+        description:
+          Whether this device is piezoelectric driven (true) or not (false).
+        range: boolean
+
+  LiMiZDrive:
+    description:
+      This element describes a Focusing Device designed to electronically
+      control a moving a mechanical part of the Microscope such as the Stage, or
+      the Microscope Stand itself (e.g. most dissecting Microscopes). An example
+      of such devices is the MFC-2000 Z-Axis Drive and Controller.
+    see_also:
+      - http://www.asiimaging.com/controllers/mfc-2000-z-axis-drive-and-controller/#tab-id-4
+    is_a: LiMiFocusingDevice
+
+  LiMiStage:
+    description:
+      A platform positioned at right angle to the optical axis of this
+      Microscope, which is designed to either directly hold a Specimen Holder
+      containing a Sample to be observed, or a Stage Insert, which itself holds
+      the Sample Holder. In many cases, this device is capable of mechanical
+      movements (as in a Mechanical Stage) to allow easy positioning and
+      rotation of the Sample in the X-, Y-, and Z-axes.
+    is_a: LiMiSamplePositioningDevice
+    attributes:
+      # Arnica to fill
+
+  LiMiMechanicalStage:
+    description:
+      A Stage fitted with ball-screw drives or rack mechanisms (sometimes
+      equipped with precision calibration) to primarily assist in the
+      translational movement of the Sample in the X and Y directions. A
+      Mechanical Stage may be built into the Microscope Stand or it may consist
+      of a removable insert. It may be manually operated, or it might be driven
+      by linear electrodynamic motors, such as for example, in
+      computer-controlled digital Microscopes. In some rare cases, a Mechanical
+      Stage might also be used for Focusing (Z-axis movement), i.e., in simple
+      surveying Microscopes.
+    is_a: LiMiStage
+
+  LiMiPiezoElectricStage:
+    description:
+      An optional piezoelectric-driven sample nano-positioning device associated
+      with this Instrument. These devices typically achieve higher precision,
+      accuracy and speed with respect to traditional Mechanical Stages.
+    is_a: LiMiStage
+
+enums:
+  LiMiHoffmanPlateSlitDesign:
+    description:
+      Available values to describe the design of the slit of an Hoffman Plate.
+    permissible_values:
+      Center:
+      Offset:
+      Other:
