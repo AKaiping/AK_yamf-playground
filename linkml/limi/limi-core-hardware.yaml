@@ -237,7 +237,7 @@ classes:
       an inert gas in in a glass bulb. The inert gas can be Mercury (He), Xenon
       (Xe), or a mixture of the two. The choice of the gas is important because
       its nature determines the spectral behavior of the lamp.
-    #An Arc lamp is a discharge lamp that produces light by an electric arc (also called a voltaic arc), which is typically generated between metal electrodes and travels through an inert gas in a glass bulb. The inert gas can be Mercury (He), Xenon (Xe), or a mixture of the two. The choice of the gas is important because its nature determines the spectral behavior of the lamp. Refer to Type for more informations about this aspect.
+    #An Arc lamp is a discharge lamp that produces light by an electric arc (also called a voltaic arc), which is typically generated between metal electrodes and travels through an inert gas in a glass bulb. The inert gas can be Mercury (He), Xenon (Xe), or a mixture of the two. The choice of the gas is important because its nature determines the spectral behavior of the lamp. Refer to Type for more information about this aspect.
     is_a: LiMiLightSource
     attributes:
       type:
@@ -307,6 +307,7 @@ classes:
         description:
           In the case this is a pulsed Laser, this is the frequency of the laser
           pulses.
+        #In the case this is a pulsed Laser (Pulse is True), this field (also known as Pulse Frequency) describes the frequency of laser pulses. The default unit is Hz.
         range: float
       repetition_rate_unit:
         description: Unit associated with the Repetition Rate value.
@@ -314,27 +315,34 @@ classes:
         ifabsent: LiMiFrequencyUnit(Hz)
       frequency_multiplication:
         description:
-          The optical frequency multiplication factor that may be specified for
-          this Laser.
+         The optical frequency multiplication factor that may be specified for
+         this Laser.
+        #This field captures the optical frequency multiplication factor that may be specified for this Laser.
         range: float
       modulation_mechanism:
         description: The modulation mechanism used for this Laser.
+        #The Modulation Mechanism used for this Laser. Examples include, None, Direct, Acousto-Optical Beam Splitter (AOBS), Acousto-Optical Tunable Filter (AOTF), Acousto-Optical Modulator (AOM).
         range: LiMiLaserModulation
       laser_class:
         description: The Safety Class this Laser belongs to.
+        #This describes the safety Class this Laser belongs to. Laser Classes are defined based on their potential for causing injury to humans’ eyes and skin.
         range: LiMiLaserSafetyClass
       is_pump:
         description: Whether this Laser serves as a Pump for a downstream Laser.
+        # Whether (True) or not (False) this Laser serves as a Pump for a downstream Laser.
       position:
         description: The position of this Laser on a Multi Laser Engine.
+        #This field captures the position of this Laser on a Multi Laser Engine.
         range: integer
         minimum_value: 1
       pulse_duration:
         description:
           In the case this is a pulsed laser, this is the duration of each Laser
           pulse.
+        #In the case this is a pulsed Laser (Pulse is True), this field describes the duration of each Laser pulse
         range: float
       pulse_duration_unit:
+        #AK: I did not see it next to pulse duration on the model. Adding a unit for pulse duration is correct regardless.
         description: Unit associated with the Pulse Duration value.
         range: LiMiTimeUnit
         ifabsent: LiMiTimeUnit(ms)
@@ -342,6 +350,8 @@ classes:
         description:
           In the case this is a Pumped Laser, this is a reference to the
           upstream Laser used to pump this one.
+        #AK: I strongly prefer DGG's description over the one in the model. In case the primary Laser is Pumped, this element describe a secondary Laser, positioned upstream of the primary Laser and used to pump it.
+        #FIXME AK: We have not added pump laser ID here but the model includes it. Perhaps it is included at another location, I will have to check.
         range: LiMiLaser
         inlined: false
       illumination_wavelength_ranges:
@@ -365,11 +375,13 @@ classes:
     attributes:
       type:
         description: The general category of this Light Emitting Diode.
+        #This field captures the general category of this Light Emitting Diode.
         range: LiMiLightEmittingDiodeType
       led_modules:
         description:
           The individual LED modules that make up this Light Emitting Diode
           Light Source.
+        #A Light Emitting Diode (LED) Light Source is often composed of multiple modules each with its own Wavelength characteristics. An individual LED module. Multiple of this elements may be used.
         range: LiMiLEDModule
         multivalued: true
 
