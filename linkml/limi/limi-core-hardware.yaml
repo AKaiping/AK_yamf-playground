@@ -351,7 +351,6 @@ classes:
           In the case this is a Pumped Laser, this is a reference to the
           upstream Laser used to pump this one.
         #AK: I strongly prefer DGG's description over the one in the model. In case the primary Laser is Pumped, this element describe a secondary Laser, positioned upstream of the primary Laser and used to pump it.
-        #FIXME AK: We have not added pump laser ID here but the model includes it. Perhaps it is included at another location, I will have to check.
         range: LiMiLaser
         inlined: false
       illumination_wavelength_ranges:
@@ -387,10 +386,12 @@ classes:
 
   LiMiLEDModule:
     description: A single module within a Light Emitting Diode Light Source.
+    #AK: This definition is created by DGG?
     is_a: LiMiObject
     attributes:
       projection_angle:
         description: The angle at which this LED module projects the light beam.
+        #This field records the angle at which this LED Module projects the light beam.
         range: float
       projection_angle_unit:
         description: Unit associated with the Projection Angle value.
@@ -412,6 +413,7 @@ classes:
         description:
           The nominal Wavelength associated with the peak response rate of this
           device.
+        #This field records the nominal Wavelength associated with the peak response rate of this device.
         range: float
       peak_wavelength_unit:
         description: Unit associated with the Peak Wavelength value.
@@ -419,6 +421,7 @@ classes:
         ifabsent: LiMiLengthUnit(nm)
       cut_on:
         description: The wavelength below which the response rate is below 50%.
+        #CutOn is the Wavelength below which the response rate is below 50%. In case a CutOn Wavelength is not available, such as in the case of a ShortPass or Notch configuration, please enter 000.
         range: float
       cut_on_unit:
         description: Unit associated with the Cut On value.
@@ -426,10 +429,12 @@ classes:
         ifabsent: LiMiLengthUnit(nm)
       cut_off:
         description: The wavelength below which the response rate is below 50%.
+        #CutOff is the Wavelength below which the response rate is below 50%. In case a CutOff Wavelength is not available, such as in the case of a LongPass configuration, please enter 000.
         range: float
         notes:
           - FIXME Shouldn’t that be the wavelength _above_ which the response
             rate is below 50%?
+          #AK: According to EdmundOptics, yes.
       cut_off_unit:
         description: Unit associated with the Cut Off value.
         range: LiMiLengthUnit
@@ -437,6 +442,7 @@ classes:
       wavelength_profile_file:
         description:
           A file containing the Wavelength profile of this hardware component.
+        #This element consists of a file containing the Wavelength profile of this hardware component.
         range: LiMiFileAnnotation
         inlined: true
 
@@ -451,6 +457,7 @@ classes:
           The nominal Illumination Power (also known as Power Output or
           Illumination Intensity) emitted at Peak Wavelength by the Light
           Source, according to the Manufacturer.
+        #This field records the nominal Illumination Power (also known as Power Output or Illumination Intensity) emitted at Peak Wavelength by this Light Source, as advertised by the Manufacturer.
         range: float
       illumination_power_unit:
         description: Unit associated with the Illumination Power value.
