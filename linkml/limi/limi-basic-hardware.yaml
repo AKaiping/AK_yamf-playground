@@ -908,6 +908,296 @@ classes:
       accuracy and speed with respect to traditional Mechanical Stages.
     is_a: LiMiStage
 
+  ##############################
+  # Focus stabilization device #
+  ##############################
+
+  LiMiFocusStabilizationDevice:
+    description:
+      An optional focus stabilization device (also known as, Auto Focus) that
+      may be used for bringing an object automatically into focus for this
+      instrument. Such devices can be controlled either via an imaging software
+      and/or by a hardware device that detects and adjusts the objective or
+      sample positions.
+    is_a: LiMiManufacturerSpecs
+    slots:
+      - id
+      - name
+    attributes:
+      # Arnica to fill
+
+  ####################
+  # Optical assembly #
+  ####################
+
+  LiMiOpticalAssembly:
+    description:
+      This is a device that might include one or more Lenses, other Optics and
+      Optics Holders. Optical Devices might be custom built or they might also
+      be available as pre-assembled units. Such devices might be embedded within
+      the Microscope Stand or exist as independent units. Examples include the
+      Condenser and the Microscope Tube.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiBeamCollimator:
+    description:
+      Beam Collimators are Lens Systems that transform a strongly diverging
+      light beam into a collimated beam, i.e., a beam where light propagates
+      essentially only in one direction, and the beam divergence is weak. Beam
+      Collimators typically contain some kind of Focusing Lens, or sometimes a
+      curved Mirror, and usually some opto-mechanics for stable mounting and
+      possibly adjustment. Beam Expanders can be custom built or they are also
+      available as pre-assembled optical devices.
+    is_a: LiMiOpticalAssembly
+
+  LiMiBeamExpander:
+    description:
+      Beam Expanders are Lens Systems whose role is to increase the diameter of
+      a collimated input beam to a larger collimated output beam. Beam Expanders
+      typically are afocal systems in which object rays enter and exit parallel
+      to the optical axis. As such a Beam Expander does not have a focal length.
+      In most cases, Beam Expanders are realized as optical telescopes
+      consisting of two lenses. Beam Expanders can be custom built or they are
+      also available as pre-assembled optical devices.
+    is_a: LiMiOpticalAssembly
+    attributes:
+      configuration:
+        description: The configuration of this Beam Expander.
+        range: LiMiBeamExpanderConfiguration
+
+  LiMiCondenser:
+    description:
+      A Condenser is a part of the illuminating system of the microscope which
+      consists of one or more lenses (or mirrors), their mounts, and typically a
+      Diaphragm. They typically also include a Turret system to facilitate
+      switching between different Optics. The are located above the Light Source
+      and under the sample in an Upright Microscope, and above the stage and
+      below the Light Source in an Inverted Microscope. They are designed to
+      collect, control and concentrate light from the Light Source into a cone
+      of light that illuminates the specimen. The aperture and angle of the
+      light cone must be adjusted (via the size of the Diaphragm) for each
+      different Objective.
+    is_a: LiMiOpticalAssembly
+    attributes:
+      correction:
+        description:
+          The type of Aberration (i.e., failure of an optical system to produce
+          a perfect image) this Condenser is design to correct.
+        range: LiMiCondenserCorrection
+      type:
+        description: >-
+          This field captures the general category this Condenser belongs to
+          according to ISO 10934-1:2002. Specifically, this category refers to
+          the type of Correction or Contrast Enhancement Method this Condenser
+          is designed to achieve. According to ISO 10934-1:2002, options
+          include: 1) Abbe, this is a condenser of simple design introduced by
+          Abbe, in which there is only limited correction for spherical
+          aberration and none for chromatic aberration. 2) Achromatic-aplanatic,
+          this is a in which chromatic aberrations and spherical aberrations
+          have been reduced. 3) Cardioid, this is a dark field condenser for
+          transmitted light illumination that has spherical aberration and coma
+          (i.e., aberration in which the image of an off-axis point object is
+          deformed so that the image is shaped like a comet) correction. 4)
+          Dark-field, this is a dark-ground condenser designed for dark-field
+          microscopy, which for reflected-light microscopy might be located
+          within the mount of the objective. 5) Pancratic, this is a condenser
+          containing a variable “zoom” (pancratic) lens which allows the size of
+          the illuminated field at the object to be varied while the illuminated
+          field diaphragm remains of constant size. 6) Phase-contrast, this is
+          condenser designed for phasecontrast microscopy. 6) Universal, this is
+          a condenser designed for multiple contrast methods such as bright
+          field, dark field, phase contrast, differential interference contrast,
+          polarized light and modulation contrast.
+        range: LiMiCondenserCategory
+
+  LiMiMicroscopeTube:
+    description:
+      Illumination Tubes are Lens systems, which might be embedded within the
+      Microscope Stand and therefore not immediately accessible. They are
+      essential for infinity-correction and should be regarded as integral parts
+      of the Objective Lens System when magnification and correction are
+      considered.
+    is_a: LiMiOpticalAssembly
+    attributes:
+      type:
+        description: The general category of this Tube.
+        range: LiMiMicroscopeTubeType
+      mechanical_length:
+        description:
+          For Objectives corrected for a finite primary image distance, this is
+          the length of the Tube in its simplest form, and it corresponds to the
+          distance in air between the Objective and the Camera port. It commonly
+          has a value of 160 mm (ISO 9345-1). For infinity-corrected objectives,
+          the mechanical tube length is hypothetically considered to be
+          infinite.
+        range: float
+      mechanical_length_unit:
+        description: Unit associated with the Mechanical Length value.
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(mm)
+      optical_length:
+        description:
+          This is the distance between the back focal plane of the Objective and
+          the primary Image plane. This distance is relevant only when using
+          finite primary Image distance Objectives.
+        range: float
+      optical_length_unit:
+        description: Unit associated with the Optical Length value.
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(mm)
+      factor:
+        description:
+          Factor (q) by which the lateral Magnification at the primary image is
+          changed by an intermediate Lens or Lens System inserted between the
+          Objective and the primary Image.
+        range: float
+
+  #############
+  # Detectors #
+  #############
+
+  LiMiDetector:
+    description:
+      A Detector available for an Instrument. An Instrument may have more than
+      one Detector of different types, such as a Photomultiplier, or a Camera.
+      The Detector ID can be used as a reference within the Channel element. The
+      values stored in Detector represent the fixed values, variable values
+      modified during the Acquisition go in DetectorSettings.
+    is_a: LiMiManufacturerSpecs
+    extra_slots:
+      allowed: true
+    slots:
+      - id
+      - name
+      - object_type
+    attributes:
+      # Arnica to fill
+
+  LiMiCamera:
+    description:
+      A Camera is a device that converts optical brightness into an electrical
+      signal using a grid of pixel sensor unit cells and then reproduces an
+      image of the specimen. An Instrument may have more than one camera of
+      different types, such as traditional CCD, EMCCD, Intensified EMCCD, sCMOS,
+      or Analog Video.
+    is_a: LiMiDetector
+    attributes:
+      # Arnica to fill
+
+  LiMiAnalogVideoCamera:
+    description: A device used to capture Analog Videos.
+    is_a: LiMiCamera
+
+  LiMiCCDCamera:
+    description: A Charged Coupled Device Camera.
+    is_a: LiMiCamera
+    attributes:
+      type:
+        description: The type of CCD Camera.
+        range: LiMiCCDType
+      architecture:
+        description:
+          The architecture of this CCD Camera and its associated transfer mode.
+        range: LiMiCCDArchitecture
+      register_well_capacity:
+        description:
+          The maximum amount of charge each read-out register can hold, measured
+          in electron counts.
+        range: integer
+
+  LiMiCMOSCamera:
+    description: A complementary meta-oxide-semiconductor camera.
+    is_a: LiMiCamera
+    attributes:
+      type:
+        description: The type of CMOS Camera.
+        range: LiMiCMOSType
+
+  LiMiIntensifiedCamera:
+    description: An intensified Camera.
+    is_a: LiMiCamera
+    attributes:
+      sensor_type:
+        description: The type of Sensor used in this Camera.
+        range: LiMiSensorType
+      intensifier_type:
+        description: The type of Intensifier used in this Camera.
+        range: LiMiIntensifiedCCDType
+      register_well_capacity:
+        description:
+          The maximum amount of charge each read-out register can hold, measured
+          in electron counts.
+        range: integer
+
+  LiMiPointDetector:
+    description:
+      Any Detector that collects light from a restricted point-like area of an
+      image. These detectors are typically used in Laser Scanning Confocal
+      Microscopy.
+    is_a: LiMiDetector
+    attributes:
+      # Arnica to fill
+
+  LiMiPhotoMultiplier:
+    description:
+      A Photomultiplier Tube (PMT) is a photoemissive device in which the
+      absorption of a photon results in the emission of an electron and it is
+      used for the detection of very weak signals. These Detectors work by
+      amplifying the electrons generated by a photocathode exposed to a photon
+      flux. The higher the supplied voltage (PMTVoltage setting), the greater
+      the amplification of the current (PMTGain setting) and thus sensitivity,
+      but also the higher the noise in the acquired image. The amplifier offset
+      (PMTOffset setting) defines black level setting of the image. A PMT has no
+      inherent spatial information of the image.
+    is_a: LiMiPointDetector
+    attributes:
+      # Arnica to fill
+
+  LiMiPhotoDiode:
+    description:
+      A Photovoltaic Detector. Most photodiodes used in confocal microscopes are
+      Avalanche Photodiode (APD) which because of the amplification gain have
+      good sensitivities and less dark current.
+    is_a: LiMiPointDetector
+    attributes:
+      avalanche:
+        description:
+          Whether (true) or not (false) this is an "Avalanche" photodiode.
+        range: boolean
+      PIN_junction:
+        description:
+          Whether this photodiode is based on a Positive-Intermediate-Negative
+          (PIN) or a Positive-Negative (PN) architecture.
+        range: boolean
+
+  LiMiHybridPhotoDetector:
+    description: A hybrid Photomultiplier and Avalanche Photodiode (APD).
+    is_a: LiMiPointDetector
+
+  LiMiGenericDetector:
+    description:
+      A Generic Detector as a collection of Key/Value pairs, which are stored in
+      a Map. One of the other detector elements should always be used in
+      preference to this if possible.
+    is_a: LiMiDetector
+    attributes:
+      map:
+        description:
+          A mapping of key/value pairs used to store customized metadata that
+          describes this detector.
+        range: LiMiMapEntry
+        multivalued: true
+        inlined: true
+        inlined_as_list: false
+
 enums:
   LiMiHoffmanPlateSlitDesign:
     description:
@@ -915,4 +1205,82 @@ enums:
     permissible_values:
       Center:
       Offset:
+      Other:
+
+  LiMiBeamExpanderConfiguration:
+    description:
+      Available values to describe the configuration of a Beam Expander.
+    permissible_values:
+      ? Galileian telescope
+      ? Keplerian telescope
+      Other:
+
+  LiMiCondenserCorrection:
+    description:
+      Available values to describe the aberration a condenser is designed to
+      correct.
+    permissible_values:
+      Astigmatism:
+      Chromatic:
+      ? Chromatic and Curvature
+      Coma:
+      Curvature:
+      Distorsion:
+      Spherical:
+      Other:
+
+  LiMiCondenserCategory:
+    description: The general category a condenser belongs to.
+    permissible_values:
+      Abbe:
+      Achromatic-Aplanatic:
+      Cardioid:
+      Dark-field:
+      Pancratic:
+      Phase-contrast:
+      Universal:
+      Other:
+
+  LiMiMicroscopeTubeType:
+    description: Available values to describe the category of a Microscope Tube.
+    permissible_values:
+      Body:
+      Intermediate:
+      Viewing:
+      Other:
+
+  LiMiCCDType:
+    description: The type of a CCD Camera.
+    permissible_values:
+      Conventional:
+      EMCCD:
+      Other:
+
+  LiMiCCDArchitecture:
+    description: The architecture of a CCD Camera.
+    permissible_values:
+      ? Frame transfer
+      Full-frame:
+      ? Interline transfer
+
+  LiMiCMOSType:
+    description: The type of a CMOS Camera.
+    permissible_values:
+      Conventional:
+      Scientific:
+      Other:
+
+  LiMiSensorType:
+    description: The type of Sensor in an intensified Camera.
+    permissible_values:
+      CCD:
+      CMOS:
+      Other:
+
+  LiMiIntensifiedCCDType:
+    description: The type of Intensifier in an intensified Camera.
+    permissible_values:
+      Conventional:
+      EBCCD:
+      MicroChannelPlate:
       Other:
