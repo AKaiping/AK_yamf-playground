@@ -574,9 +574,11 @@ classes:
         description:
           Whether this Objective is designed for a special Light application
           (e.g., IR or UV).
+        #This field specifies...
         range: LiMiObjectiveLightType
       correction_collar:
         description: Whether this Objective is fitted with a Correction Collar.
+        #This field records whether (True) or not (False) the Objective was fitted with a Correction Collar. When using high NA dry Objectives (NA 0.8 or greater), cover glass thickness variations of only a few micrometers, immersion medium, and temperature changes result in dramatic image degradation due to aberration. To compensate for these errors, the more highly corrected Objectives are equipped with a Correction Collar mechanism, which is provided to adjust the central lens group position to compensate for deviations from correct optical path length due to changes in Cover Glass Thickness, the nature of the Immersion Liquid, different Numerical Apertures, and Temperature.
         range: boolean
         notes:
           - FIXME This should not be needed? If there is no Correction Collar,
@@ -584,11 +586,13 @@ classes:
       correction_collar_type:
         description:
           The type of Correction Collar this Objective is fitted with, if any.
+        #This field records the type of Correction Collar with which this Objective is fitted. In case the Objective has more than one Correction Collar please enter "Multi" and provide more details in Description.
         range: LiMiCorrectionCollarType
       dipping_medium:
         description:
           The Dipping Medium this Objective is compatible with (when the
           Immersion Type is set to "Dipping").
+        #In case the Immersion Type for this Objective is designated as "Dipping", this field captures the type of Dipping Medium this Objective is compatible with. Examples include, water-based (biological buffers, culture media, other water-based solutions) organic-based [FocusClear (CLARITY); CUBIC-1, CUBIC-2, CUBIC-R1, CUBIC-R2; 2,2-thiodiethanol (TDE); ethyl cinnamate; Benzyl Benzoate and BB-PEG (PEGASOS); Benzyl Alcohol, Benzyl Benzoate (BABB); dibenzyl ether (DBE); 100% Ethanol].
         range: LiMiDippingType
         notes:
           - FIXME Add a rule to forbid the use of this attribute when Immersion
@@ -606,12 +610,14 @@ classes:
         description:
           The maximal diameter of the view field allowed by this Objective,
           expressed in mm, and measured at the intermediate image plane.
+        #This field records the maximal diameter of the view field allowed by this Objective, expressed in mm, and measured at the intermediate image plane. NB: The field of view is influenced by the magnification and diameter of the ocular (eyepiece) field diaphragm, but also by the limits imposed by the design of the Objective.
         range: float
         ##AK: why not define default unit here##
       image_distance:
         description:
           The distance in air between the rear principal plane of this Objective
           and the primary Image plane.
+        #This field records
         range: float
       image_distance_unit:
         description: Unit associated with the Image Distance value.
@@ -621,6 +627,7 @@ classes:
         description:
           The distance measured along the optical axis from the front principal
           plane of this Lens to the front focal plane.
+        #This field records the distance (f) measured along the optical axis from the front principal plane of this Lens to the front focal plane (F).
         range: float
       front_local_length_unit:
         description: Unit associated with the Front Focal Length value.
@@ -630,6 +637,7 @@ classes:
         description:
           The distance measured along the optical axis from the read principal
           plane of this Lens to the rear focal plane.
+        #This field records the distance (f') measured along the optical axis from the rear principal plane of this Lens to the rear focal plane (F').
         range: float
       back_focal_length_unit:
         description: Unit associated with the Back Focal Length value.
@@ -639,6 +647,7 @@ classes:
         description:
           The distance between the mounting plane of this Objective and the
           specimen plane.
+        #This field records...
         range: float
       parfocalizing_distance_unit:
         description: Unit associated with the Parfocalizing Distance value.
@@ -646,7 +655,7 @@ classes:
         ifabsent: LiMiLengthUnit(mm)
 
   ###########
-  # Filters AK Test #
+  # Filters AK
   ###########
 
   LiMiFilter:
@@ -656,6 +665,7 @@ classes:
       selectively control the Wavelengths, color temperature, vibration
       direction, and/or intensity of the radiation which it transmits or
       reflects.
+    #This element describes an optical Filter positioned in the Light Path for one or more Channels available for this Instrument. An optical Filter is a device designed to selectively control the Wavelengths, color temperature, vibration direction, and/or intensity of the radiation which it transmits or reflects. An Instrument may have several Filters of different types, such as an Excitation, Emission, Neutral Density or an additional Generic Filter positioned in the Light Path for different purposes. For each fluorescence Image there should be at least one Filter element specified per Channel. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr Wheel, or Filter Slider. Note: Filter Holder is not the same as a Filter Set.
     is_a: LiMiManufacturerSpecs
     slots:
       - id
@@ -663,10 +673,9 @@ classes:
       - object_type
     attributes:
       type:
-        #AK wants to rename this to filter_type-
         description:
           This field captures the Type of Filter used in this Instrument.
-        range: FilterType
+        range: LiMiFilterType
         required: true
 
       filter_holder_position:
@@ -681,14 +690,14 @@ classes:
           coating is one or more thin layers of material deposited on an optical
           component such as a Lens, Filter or Mirror, which alters the way in
           which the optic reflects and transmits light.
-        range: CoatingMethod
+        range: LiMiFilterCoatingMethod
         required: true
 
       light_path_location:
         description:
           This field records the location of this component in the Microscope
           Light Path.
-        range: LightPathLocation
+        range: LiMiFilterLightPathLocation
         required: true
 
       technology:
@@ -696,13 +705,13 @@ classes:
           This field records the filtering Technology utilized for this optical
           element. The main types of technologies used in fluorescence analysis
           are Absorption (aka colored) glass, Polymer or Thin-film coating.
-        range: FilterTechnology
+        range: LiMiFilterTechnology
 
       attenuation_method:
         description:
           This field records the means by which this optical element achieves
           out-of-band transmission attenuation.
-        range: AttenuationMethod
+        range: LiMiFilterAttenuationMethod
         required: true
 
       attenuation_coefficient:
@@ -718,19 +727,23 @@ classes:
         range: float
 
       diameter:
-        description: This field describes the Diameter of this optical element
+        description: This field describes the Diameter of this filter
+        #This field describes the Diameter of this optical element
         range: float
       #AK: should we define this and all measures of distance as a slot, then we can also make a rule that a unit should be present if a value is present?
       diameter_unit:
         description: unit associated with the filter diameter
         range: LiMiLengthUnit
+        #AK: define a default unit here?
 
       thickness:
-        description: This field describes the Thickness of this optical element
+        description: This field describes the Thickness of this filter
+        ##This field describes the Diameter of this optical element
         range: float
       thickness_unit:
         description: unit associated with the filter thickness
         range: LiMiLengthUnit
+        #AK: define a default unit?
 
       angle_of_incidence:
         description:
@@ -744,7 +757,8 @@ classes:
         description: unit associated with the filter angle_of_incidence
         #AK: this is not included in the model but SHOULD be
         range: LiMiAngleUnit
-      #Ak:LiMiAngleUnit should be defined with enums degree, radian, steradian
+      #AK:LiMiAngleUnit should be defined with enums degree, radian, steradian
+      #AK: add default unit degrees
 
       polarization:
         description:
@@ -753,24 +767,29 @@ classes:
           angles-of-incidence will cause some amount of polarization, the
           precise effect varying greatly with wavelength and with the particular
           Coating design.
-        range: Polarization
+        range: LiMiFilterPolarization
 
   LiMiExcitationFilter:
     description:
       A Filter whose purpose is to selectively attenuate the Light that is
       utilized to Excite the Sample depending on Wavelength.
+    #This element refers to an Excitation Filter whose purpose is to selectively attenuate the Light that is utilized to Excite the Sample depending on Wavelength. This element can be associated with an optional Filter Holder.
     is_a: LiMiFilter
 
   LiMiEmissionFilter:
     description:
       A Filter whose purpose is to selectively attenuate the Fluorescent Light
       that is emitted by the Sample dependent on Wavelength.
+    #This element refers to an Emission Filter whose purpose is to selectively attenuate the Fluorescent Light that is emitted by the Sample depending on Wavelength. This element can be associated with an optional Filter Holder.
     is_a: LiMiFilter
+
+  #AK: We missed Neutral Density Filter
 
   LiMiGenericFilter:
     description:
       A generic Filter positioned along the Light Path in addition to the
       canonical fluorescence Excitation and Emission Filters.
+    #This field refers to...
     notes:
       - FIXME Should not be needed, because in this schema the parent Filter
         class is _not_ abstract, so a "generic" filter can simply be a Filter.
@@ -781,6 +800,7 @@ classes:
       A range of wavelength (also known as a Band) that are transmitted by an
       optical component. This also includes the maximum amount of light
       transmitted.
+    #This element records the Range (also known as Band) of Wavelengths that are transmitted by this optical component. It also records the maximum amount of light transmitted. Multiple of these elements can be used.
     is_a: LiMiObject
     attributes:
       wavelength:
@@ -795,15 +815,19 @@ classes:
           transmittance) respectively. In the case of Dichroics, Wavelength most
           commonly refers to the Edge Wavelength which might be either the CutOn
           or the CutOff Wavelength depending on individual cases.
+        #This field records...
         range: float
+        required: true
       wavelength_unit:
         description: Unit associated with the Wavelength value.
         range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(nm)
       transmittance:
         description:
           The maximum of light this optical component is capable of transmitting
           in this Wavelength Range, at the Peak Wavelength. It is represented as
           a fractional value from 0.0 to 1.0.
+        #This field records...
         range: float
         minimum_value: 0.0
         maximum_value: 1.0
@@ -815,10 +839,11 @@ classes:
           amplitude is 50% of the maximum.
         range: float
         minimum_value: 0.0
+        required: true
       FWHM_bandwidth_unit:
         description: Unit associated with the FWHM Bandwidth value.
         range: LiMiLengthUnit
-  ## AK: we miss the transmittance profile file ##
+  ## AK: we miss transmittance profile file ##
 
   ############
   # Detector #
@@ -1124,3 +1149,6 @@ enums:
       Mounted:
       Unmounted:
       Other:
+
+  LiMiFilterType:
+    description:
