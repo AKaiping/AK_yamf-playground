@@ -516,7 +516,7 @@ classes:
           Acquisition of a specific Image must be specified in Objective
           Settings.
         #According to ISO 10934-1:2002, an Immersion Liquid is a liquid (commonly immersion oil, water or glycerol) specified as suitable for use in the space between the front of an immersion lens and the object NOTE Because the immersion liquid is considered in the computing of corrections to be part of the lens, its refractive index and dispersion (or Abbe number) are critical. Please refer to ISO 8036-1 for more details on Immersion Oil. This field describes the general category of the Immersion Liquid this Objective is designed for, according to the Manufacturer. If the general category is not "Air", the actual Immersion Liquid that was used during the Acquisition of a specific Image must be specified in Objective Settings.
-        range: LiMiImmersionType
+        range: LiMiObjectiveImmersionType
 
       working_distance:
         description:
@@ -560,7 +560,7 @@ classes:
           The type of contrast modulation plate present in this Objective, if
           any.
         #This field specifies the presence in this Objective of a contrast modulation plate, such as a Phase Ring (Ph1, Ph2, Ph3), a Hoffman modulator, a Varel modulator, or similar.
-        range: LiMiContrastModulationPlate
+        range: LiMiObjectiveContrastModulationPlate
       dic:
         description:
           Whether (True) the Objective is designed for Differential Interference
@@ -587,13 +587,13 @@ classes:
         description:
           The type of Correction Collar this Objective is fitted with, if any.
         #This field records the type of Correction Collar with which this Objective is fitted. In case the Objective has more than one Correction Collar please enter "Multi" and provide more details in Description.
-        range: LiMiCorrectionCollarType
+        range: LiMiObjectiveCorrectionCollarType
       dipping_medium:
         description:
           The Dipping Medium this Objective is compatible with (when the
           Immersion Type is set to "Dipping").
         #In case the Immersion Type for this Objective is designated as "Dipping", this field captures the type of Dipping Medium this Objective is compatible with. Examples include, water-based (biological buffers, culture media, other water-based solutions) organic-based [FocusClear (CLARITY); CUBIC-1, CUBIC-2, CUBIC-R1, CUBIC-R2; 2,2-thiodiethanol (TDE); ethyl cinnamate; Benzyl Benzoate and BB-PEG (PEGASOS); Benzyl Alcohol, Benzyl Benzoate (BABB); dibenzyl ether (DBE); 100% Ethanol].
-        range: LiMiDippingType
+        range: LiMiObjectiveDippingType
         notes:
           - FIXME Add a rule to forbid the use of this attribute when Immersion
             Type is _not_ "Dipping"?
@@ -603,7 +603,7 @@ classes:
           designation of the Phase Plate found in this Objective. This
           designation has to match the Phase Number of the Phase Ring associated
           with the front focal plane of the Condenser.
-        range: LiMiPhaseContrastDesignationType
+        range: LiMiObjectivePhaseContrastDesignationType
         see_also:
           - https://www.microscopyu.com/techniques/phase-contrast/phase-contrast-Microscope-configuration
       objective_view_field:
@@ -931,7 +931,7 @@ enums:
       VioletCorrected:
       Other:
 
-  LiMiImmersionType:
+  LiMiObjectiveImmersionType:
     description:
       The general category of the Immersion Liquid an Objective has been
       designed for, according to its Manufacturer.
@@ -945,7 +945,7 @@ enums:
       Water:
       Other:
 
-  LiMiContrastModulationPlate:
+  LiMiObjectiveContrastModulationPlate:
     description:
       The type of contrast modulation plate that may be present within an
       Objective.
@@ -971,7 +971,7 @@ enums:
       Ultraviolet:
       Visible:
 
-  LiMiCorrectionCollarType:
+  LiMiObjectiveCorrectionCollarType:
     description: The type of Correction Collar fitted on a Objective.
     permissible_values:
       ? Coverglass Thickness
@@ -980,14 +980,14 @@ enums:
       Temperature:
       Multi:
 
-  LiMiDippingType:
+  LiMiObjectiveDippingType:
     description: The type of Dipping Medium an Objective is compatible with.
     permissible_values:
       Organic-based:
       Water-based:
       Other:
 
-  LiMiPhaseContrastDesignationType:
+  LiMiObjectivePhaseContrastDesignationType:
     description:
       The type of Phase Contrast designation of the Phase Plate found in an
       Objective.
@@ -1150,5 +1150,64 @@ enums:
       Unmounted:
       Other:
 
+  #For enums linked with filters and objectives, AK has used only a part of
+  #the definitions which are complete in the referring classes
+
   LiMiFilterType:
-    description:
+    description: This field captures the Type of Filter used in this microscope.
+    #This field captures the Type of Filter used in this case
+    permissible_values:
+      Bandpass:
+      BandStop:
+      Multipass:
+      Notch:
+      Longpass:
+      Shortpass:
+      Other:
+
+  LiMiFilterCoatingMethod:
+    description: This field records the type of Coating used in the specific filter.
+    #AK made this up because we do not want to repeat the description from
+    #class also under the associated enum
+    permissible_values:
+      HardCoated:
+      SoftCoated:
+      Other:
+
+  LiMiFilterLightPathLocation:
+    description: This field records the location of this component in the Microscope Light Path.
+    range:
+      Infinity Space:
+      Camera Port:
+      Illumination Port:
+      Other:
+
+  LiMiFilterTechnology:
+    description: This field records the filtering Technology utilized for this optical element.
+    range:
+      Absorption Colored Glass:
+      Metallic-coating:
+      Polymer-Based:
+      Thin-film:
+      interference-coating:
+      Other:
+
+  LiMiFilterAttenuationMethod:
+    description: This field records the mean by which this optical element achieves out-of-band transmission attenuation.
+    range:
+      Absorption:
+      Reflection:
+      Refraction:
+      Other:
+
+  LiMiFilterPolarization:
+    description: This field records the polarization effect of this optical element.
+    range:
+      Circular:
+      Elliptical:
+      Planar:
+      Other:
+
+
+
+
