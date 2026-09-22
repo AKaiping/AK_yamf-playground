@@ -783,9 +783,10 @@ classes:
     #This element refers to an Emission Filter whose purpose is to selectively attenuate the Fluorescent Light that is emitted by the Sample depending on Wavelength. This element can be associated with an optional Filter Holder.
     is_a: LiMiFilter
 
-  #AK: We missed Neutral Density Filter
+  #AK: We missed Neutral Density Filter also to be added in basic
 
   LiMiGenericFilter:
+  #AK: this is in basic
     description:
       A generic Filter positioned along the Light Path in addition to the
       canonical fluorescence Excitation and Emission Filters.
@@ -894,7 +895,7 @@ classes:
         range: LiMiDetectorNoiseModel
       dark_current_rate:
         description: This field records the Dark Current Rate of this Detector as specified by the Manufacturer. The Dark Current Rate is the median current detected in the absence of light. Generally expressed in e-/pixel/sec.
-          required: true
+        required: true
       dark_current_rate_unit:
         description: Unit associated with the dark current rate value
         range: LiMiRateUnit
@@ -915,7 +916,7 @@ classes:
         description: Unit associated with the ambient operating temperature.
         range: LiMiTemperatureUnit
         #AK: DGG; we should add this in the units
-        ifabsent: LiMiTemepratureUnit(degrees Celsius)
+        ifabsent: LiMiTemperatureUnit(degrees Celsius)
       ambient_operating_humidity:
         description: This field records the Ambient Humidity at which this detector is designed to operate, according to the Manufacturer.
       relay_lens_ref:

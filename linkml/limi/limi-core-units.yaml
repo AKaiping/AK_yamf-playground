@@ -73,7 +73,7 @@ enums:
       Ym:
         title: yotta meter
       Zm:
-        title: zetta metter
+        title: zetta meter
       Em:
         title: exa meter
       Pm:
@@ -107,7 +107,7 @@ enums:
       fm:
         title: femto meter
       am:
-        title: atto metter
+        title: atto meter
       zm:
         title: zepto meter
       ym:
