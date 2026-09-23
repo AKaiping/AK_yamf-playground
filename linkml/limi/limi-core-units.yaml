@@ -268,8 +268,7 @@ enums:
           (0≤T≤1).
 
   LiMiNoiseUnit:
-    description: Available values to describe the unit of a value that
-    represents noise
+    description: Available values to describe the unit of a value that represents noise
     permissible_values:
       dB:
         title: decibels
