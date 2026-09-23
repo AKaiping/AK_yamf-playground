@@ -786,7 +786,7 @@ classes:
   #AK: We missed Neutral Density Filter also to be added in basic
 
   LiMiGenericFilter:
-  #AK: this is in basic
+  #AK: this should be in basic
     description:
       A generic Filter positioned along the Light Path in addition to the
       canonical fluorescence Excitation and Emission Filters.
@@ -921,19 +921,9 @@ classes:
         description: This field records the Ambient Humidity at which this detector is designed to operate, according to the Manufacturer.
       relay_lens_ref:
         description: This field contains a reference to a Lens positioned at the Mount connecting this Detector to the Microscope Stand.
-        is_a: LiMiObject
+        inlined: true
+       # AK: DGG, is this correctly implemented?
 
-
-
-
-
-
-
-
-
-
-
-    # Arnica to fill
 
 enums:
   LiMiMicroscopeType:
