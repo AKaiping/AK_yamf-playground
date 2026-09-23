@@ -247,3 +247,45 @@ enums:
         title: radian
       gon:
         title: gradian
+
+  LiMiTemperatureUnit:
+    description: Available values to describe the unit of a value that represents a Temperature
+    permissible_values:
+      #AK: DGG; how did you add the micron symbol? We should add the degree sign before the C, F, and K.
+      C:
+        title: degree celsius
+      F:
+        title: Fahrenheit
+      K:
+        title: Kelvin
+
+  LiMiAttenuationCoefficientUnit:
+    description: Available values to describe the unit of a value that represents an attenuation coefficient
+    permissible_values:
+      OD:
+        title: optical density
+        description: OD is given by -log10(T) where T is Transmittance
+          (0≤T≤1).
+
+  LiMiNoiseUnit:
+    description: Available values to describe the unit of a value that
+    represents noise
+    permissible_values:
+      dB:
+        title: decibels
+
+  LiMiRateUnit:
+    description: Available values to describe the unit of a value that represents a Rate
+    permissible_values:
+      e/px/s:
+        title: electrons per pixel per second
+
+  LiMiDynamicRangeUnit:
+    description: Available values to describe the unit of a value that represents a dynamic range
+    permissible_values:
+      dB:
+        title: decibels
+
+
+
+

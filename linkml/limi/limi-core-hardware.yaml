@@ -180,6 +180,7 @@ classes:
         notes:
           - FIXME Shouldn’t that be an attribute of the Instrument rather than
             of the MicroscopeStand?
+          #AK agrees
       origin:
         description: The origin of this microscope stand.
         #This describes the origin of this microscope stand. Specifically it specifies whether this Microscope Stand was purchased from a Commercial vendor and is being used as-is (i.e., Commercial- as is), purchased from a Commercial vendor and subsequently Modified for a specialized application (i.e., Commercial- custom-modified) or entirely Custom-built from scratch (i.e., Custom-built).
@@ -205,7 +206,7 @@ classes:
 
   LiMiLightSource:
     description: A Light Source on an Instrument.
-    #This element describes one or more Light Source(s) available for this Instrument.  An Instrument may have several Light Sources of different types (Laser, Light Emitting Diode, Filament, Arc etc.). A typical fluorescence Microscope has two Light Sources, one for Transmitted light and one for Fluorescence light.
+    #This element describes one or more Light Source(s) available for this Instrument. An Instrument may have several Light Sources of different types (Laser, Light Emitting Diode, Filament, Arc etc.). A typical fluorescence Microscope has two Light Sources, one for Transmitted light and one for Fluorescence light.
     is_a: LiMiManufacturerSpecs
     slots:
       - id
@@ -347,6 +348,7 @@ classes:
         description: Unit associated with the Pulse Duration value.
         range: LiMiTimeUnit
         ifabsent: LiMiTimeUnit(ms)
+        #AK: why did you choose ms as the default unit?
       pump:
         description:
           In the case this is a Pumped Laser, this is a reference to the
@@ -517,7 +519,6 @@ classes:
           Settings.
         #According to ISO 10934-1:2002, an Immersion Liquid is a liquid (commonly immersion oil, water or glycerol) specified as suitable for use in the space between the front of an immersion lens and the object NOTE Because the immersion liquid is considered in the computing of corrections to be part of the lens, its refractive index and dispersion (or Abbe number) are critical. Please refer to ISO 8036-1 for more details on Immersion Oil. This field describes the general category of the Immersion Liquid this Objective is designed for, according to the Manufacturer. If the general category is not "Air", the actual Immersion Liquid that was used during the Acquisition of a specific Image must be specified in Objective Settings.
         range: LiMiObjectiveImmersionType
-
       working_distance:
         description:
           The Working Distance of this Objective under normal operating
@@ -612,7 +613,8 @@ classes:
           expressed in mm, and measured at the intermediate image plane.
         #This field records the maximal diameter of the view field allowed by this Objective, expressed in mm, and measured at the intermediate image plane. NB: The field of view is influenced by the magnification and diameter of the ocular (eyepiece) field diaphragm, but also by the limits imposed by the design of the Objective.
         range: float
-        ##AK: why not define default unit here##
+        ifabsent: LiMiLengthUnit(mm)
+        ##AK: I added a default unit here
       image_distance:
         description:
           The distance in air between the rear principal plane of this Objective
@@ -683,6 +685,7 @@ classes:
           This field records the position of this element in a Filter Holder of
           any kind, such as a Filter Slider, Turret or Wheel.
         range: integer
+        limi_tier: 2
 
       coating_method:
         description:
@@ -706,6 +709,7 @@ classes:
           element. The main types of technologies used in fluorescence analysis
           are Absorption (aka colored) glass, Polymer or Thin-film coating.
         range: LiMiFilterTechnology
+        limi_tier: 2
 
       attenuation_method:
         description:
@@ -713,6 +717,7 @@ classes:
           out-of-band transmission attenuation.
         range: LiMiFilterAttenuationMethod
         required: true
+        limi_tier: 2
 
       attenuation_coefficient:
         description:
@@ -725,26 +730,34 @@ classes:
           optical density (OD), whereas OD= -log10(T), and T=Transmittance
           (0≤T≤1).
         range: float
+        limi_tier: 3
+      attentuation_coefficient_units:
+        description: Unit associated with Attenuation Coefficient
+        range: LiMiAttenuationCoefficientUnit
+        #AK: I added this to limi core units
 
       diameter:
         description: This field describes the Diameter of this filter
         #This field describes the Diameter of this optical element
         range: float
-      #AK: should we define this and all measures of distance as a slot, then we can also make a rule that a unit should be present if a value is present?
+        limi_tier: 3
+        #AK: should we define this and all measures of distance as a slot, then we can also make a rule that a unit should be present if a value is present?
       diameter_unit:
         description: unit associated with the filter diameter
         range: LiMiLengthUnit
-        #AK: define a default unit here?
+        ifabsent: LiMiLengthUnit(cm)
+        #AK: I added a default unit here
 
       thickness:
         description: This field describes the Thickness of this filter
         ##This field describes the Diameter of this optical element
         range: float
+        limi_tier: 3
       thickness_unit:
         description: unit associated with the filter thickness
         range: LiMiLengthUnit
-        #AK: define a default unit?
-
+        ifabsent: LiMiLengthUnit(mm)
+        #AK: I added a default unit here
       angle_of_incidence:
         description:
           This field records the optimal angle of incidence (AOI) for this
@@ -753,12 +766,13 @@ classes:
           reflection, AOI is by definition equal to the Angle Of Reflection
           (AOR).
         range: float
+        limi_tier: 3
       angle_of_incidence_unit:
         description: unit associated with the filter angle_of_incidence
-        #AK: this is not included in the model but SHOULD be
+        #AK: this is not included in the model but SHOULD be, so I added it
         range: LiMiAngleUnit
-      #AK:LiMiAngleUnit should be defined with enums degree, radian, steradian
-      #AK: add default unit degrees
+        ifabsent: LiMiAngleUnit(deg)
+
 
       polarization:
         description:
@@ -768,6 +782,7 @@ classes:
           precise effect varying greatly with wavelength and with the particular
           Coating design.
         range: LiMiFilterPolarization
+        limi_tier: 3
 
   LiMiExcitationFilter:
     description:
@@ -819,6 +834,7 @@ classes:
         #This field records...
         range: float
         required: true
+        minimum_value: 0.0
       wavelength_unit:
         description: Unit associated with the Wavelength value.
         range: LiMiLengthUnit
@@ -832,8 +848,9 @@ classes:
         range: float
         minimum_value: 0.0
         maximum_value: 1.0
+        limi_tier: 2
       FWHM_bandwidth:
-        #AK: suggest suffixing_value to this
+        #AK: suggest suffixing_value to this, so FWHM_bandwidth_value
         description:
           The width of this Transmittance Range. Specifically, the Full Width at
           Half Maximum (FWHM) represents the bandwidth of the Wavelength
@@ -868,61 +885,82 @@ classes:
         description: This field records the type of Mount used to connect this detector to the Microscope Stand.
         required: true
         range: LiMiDetectorMount
+        limi_tier: 2
       max_bit_depth:
         description: This field records the Maximum Bit Depth provided by the
           Detector's Analog to Digital Converter (ADC; also referred to as Digitizer).
         required: true
         range: LiMiDetectorMaxBitDepth
+        limi_tier: 2
       quantum_efficiency:
         description: This field records the Quantum Efficiency observed at Peak Wavelength, according to the Manufacturer. Quantum Efficiency is generally defined as is the ratio of incident photons to converted electrons. Typically expressed as a number between 0 and 1.
         required: true
+        range: float
+        limi_tier: 2
       electron_conversion_factor:
-        description: This field records the Electron-Conversion Factor for
-        this Detector, as specified by the Manufacturer. The Electron Conversion Factor relates the actual number of electrons generated by the Detector with the digital number associated with each Pixel. It is expressed in electrons/Analog-to-Digital-Unit (ADU). Note that ADU can also be referred to as Digital Number (DN) or Binary Number. It is sometimes referred to as Digital Gain or, in case of CCD cameras as CCD Gain.
+        description: This field records the Electron-Conversion Factor for this Detector, as specified by the Manufacturer. The Electron Conversion Factor relates the actual number of electrons generated by the Detector with the digital number associated with each Pixel. It is expressed in electrons/Analog-to-Digital-Unit (ADU). Note that ADU can also be referred to as Digital Number (DN) or Binary Number. It is sometimes referred to as Digital Gain or, in case of CCD cameras as CCD Gain.
         required: true
+        range: float
+        limi_tier: 2
       readout_noise:
         description: This field captures the Read-out Noise associated with this Detector, as specified by the Manufacturer. Read-out Noise is a constant amount of noise and it includes thermal noise build-up and clock induced charge added by the CCD chip, the readout amplifier and surrounding electronics. It is generally expressed in photo-electrons (i.e., e- root-mean-square).
         required: true
+        range: float
+        limi_tier: 2
       readout_noise_unit:
         description: Unit associated with readout noise.
         range: LiMiNoiseUnit
-        #AK: If this does not exist, we should add it, or just say decibels?
+        #AK: I added this to core units
         ifabsent: LiMiNoiseUnit(dB)
-        required: true
       detector_noise_model:
         description: This field records the Noise Model associated with this Detector.
         required: true
         range: LiMiDetectorNoiseModel
+        limi_tier: 2
       dark_current_rate:
         description: This field records the Dark Current Rate of this Detector as specified by the Manufacturer. The Dark Current Rate is the median current detected in the absence of light. Generally expressed in e-/pixel/sec.
         required: true
+        range: float
+        limi_tier: 2
       dark_current_rate_unit:
         description: Unit associated with the dark current rate value
         range: LiMiRateUnit
-        ifabsent: LiMiRateUnit(e-/px/s)
-        required: true
-        #AK: DGG, should we define a unit for rates?
+        ifabsent: LiMiRateUnit(e/px/s)
+        #AK: I added this to core units
       dynamic_range:
         description: This field records the Dynamic Range fo this detector in
           deciBel (dB)
+        range: float
+        limi_tier: 2
       dynamic_range_unit:
         description: Unit associated with the detector dynamic range.
         range: LiMiDynamicRangeUnit
         ifabsent: LiMiDynamicRangeUnit(dB)
+        #AK: I added this to core units
       ambient_operating_temperature:
         description: This field records the Ambient Temperature at which this
           Detector is designed to operate, according to the Manufacturer.
+        limi_tier: 3
+        range: float
       ambient_operating_temperature_unit:
         description: Unit associated with the ambient operating temperature.
         range: LiMiTemperatureUnit
-        #AK: DGG; we should add this in the units
-        ifabsent: LiMiTemperatureUnit(degrees Celsius)
+        #AK: I added this to core units
+        ifabsent: LiMiTemperatureUnit(C )
       ambient_operating_humidity:
         description: This field records the Ambient Humidity at which this detector is designed to operate, according to the Manufacturer.
+        limi_tier: 2
+        range: float
       relay_lens_ref:
         description: This field contains a reference to a Lens positioned at the Mount connecting this Detector to the Microscope Stand.
         inlined: true
        # AK: DGG, is this correctly implemented?
+
+  LiMiDetectorWavelengthRange:
+    description: This element records the Range of Wavelengths this device is designed for, according to the Manufacturer. Multiple of this element may be used.
+    is_a: LiMiWavelengthRange
+    limi_tier: 2
+    #AK: still to add wavelengthprofilefile
 
 
 enums:
@@ -1269,32 +1307,32 @@ enums:
       Planar:
       Other:
 
-LiMiDetectorMount:
-  description: The type of mount used to connect this detector to the
-  microscope stand.
-  permissible_values:
-    C-mount:
-    D-SLR adapter:
-    SLR adapter:
-    T-mount:
-    Other:
+  LiMiDetectorMount:
+    description: The type of mount used to connect this detector to the
+    microscope stand.
+    permissible_values:
+      C-mount:
+      D-SLR adapter:
+      SLR adapter:
+      T-mount:
+      Other:
 
-LiMiDetectorMaxBitDepth:
-  description: The maximum Bit Depth provided by the Detector's ADC
-  permissible_values:
-    8 bit:
-    12 bit:
-    14 bit:
-    16 bit:
-    32 bit:
-    64 bit:
+  LiMiDetectorMaxBitDepth:
+    description: The maximum Bit Depth provided by the Detector's ADC
+    permissible_values:
+      8 bit:
+      12 bit:
+      14 bit:
+      16 bit:
+      32 bit:
+      64 bit:
 
-LiMiDetectorNoiseModel:
-  description: The noise model associated with the detector.
-  permissible_values:
-    Gaussian:
-    Poisson:
-    Other:
+  LiMiDetectorNoiseModel:
+    description: The noise model associated with the detector.
+    permissible_values:
+      Gaussian:
+      Poisson:
+      Other:
 
 
 
