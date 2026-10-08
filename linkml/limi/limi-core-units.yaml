@@ -259,31 +259,25 @@ enums:
       K:
         title: Kelvin
 
-  LiMiAttenuationCoefficientUnit:
-    description: Available values to describe the unit of a value that represents an attenuation coefficient
+  LiMiElectricCurrentUnit:
+    description: Available values to describe the unit of a value that
+    represents electric current
     permissible_values:
-      OD:
-        title: optical density
-        description: OD is given by -log10(T) where T is Transmittance
-          (0≤T≤1).
+      A:
+        title: Amperes
+      e-/pixel/s:
+        title: electrons per pixel per second
+      e-rms:
+        title: root mean square electrons
 
-  LiMiNoiseUnit:
-    description: Available values to describe the unit of a value that represents noise
-    permissible_values:
-      dB:
-        title: decibels
-
-  LiMiRateUnit:
+  LiMiRatioUnit:
     description: Available values to describe the unit of a value that represents a Rate
     permissible_values:
-      e/px/s:
-        title: electrons per pixel per second
-
-  LiMiDynamicRangeUnit:
-    description: Available values to describe the unit of a value that represents a dynamic range
-    permissible_values:
+      bel:
+        title: bel
       dB:
-        title: decibels
+        title: decibel
+
 
 
 
