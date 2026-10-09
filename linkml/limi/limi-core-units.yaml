@@ -251,7 +251,7 @@ enums:
   LiMiTemperatureUnit:
     description: Available values to describe the unit of a value that represents a Temperature
     permissible_values:
-      #AK: DGG; how did you add the micron symbol? We should add the degree sign before the C, F, and K.
+      #AK: DGG; how do we add a degree symbol before the C, F, and K.
       C:
         title: degree celsius
       F:
@@ -259,9 +259,72 @@ enums:
       K:
         title: Kelvin
 
+  LiMiPressureUnit:
+    description: Available values to describe the unit of a value that represents air pressure
+    permissible_values:
+      YPa:
+        title: yotta Pasccal
+      ZPa:
+        title: zetta Pascal
+      EPa:
+        title: exa Pascal
+      PPa:
+        title: peta Pascal
+      TPa:
+        title: tetra Pascal
+      GPa:
+        title: Giga Pascal
+      MPa:
+        title: mega Pascal
+      kPa:
+        title: kilo Pascal
+      hPa:
+        title: hecto Pascal
+      daPa:
+        title: deca Pascal
+      cPa:
+        title: centi Pascal
+      mPa:
+        title: milli Pascal
+      µPa:
+        title: micro Pascal
+      nPa:
+        title: nano Pascal
+      pPa:
+        title: pico Pascal
+      fPa:
+        title: femto Pascal
+      aPa:
+        title: atto Pascal
+      zPa:
+        title: zepto Pascal
+      yPa:
+        title: yocto Pascal
+      bar:
+        title: bar
+      Mbar:
+        title: mega bar
+      kbar:
+        title: kilo bar
+      dbar:
+        title: deci bar
+      cbar:
+        title: centi bar
+      mbar:
+        title: millibar
+      atm:
+        title: atmosphere
+      psi:
+        title: pound-force per square inch
+      Torr:
+        title: Torr
+      mTorr:
+        title: milli Torr
+      mmHg:
+        title: mm of Mercury
+
   LiMiElectricCurrentUnit:
-    description: Available values to describe the unit of a value that
-    represents electric current
+    description: Available values to describe the unit of a value that represents electric current
     permissible_values:
       A:
         title: Amperes
@@ -277,6 +340,90 @@ enums:
         title: bel
       dB:
         title: decibel
+
+  LiMiIrradianceUnit:
+    description: Available values to describe the unit of a value that represents Irradiance
+    permissible_values:
+      W/m2:
+        title: Watt per squared meter
+      mW/µm2:
+        title: milli Watt per squared micro meter
+      mW/nm2:
+        title: milli Watt per squared nano meter
+      µW/µm2:
+        title: micro Watt per squared micro meter
+      µW/nm2:
+        title: micro Watt per squared nano meter
+
+  LiMiConcentrationUnit:
+    description: Available values to describe the unit of a value that
+    represents concentration
+    permissible_values:
+      ng/µl:
+        title: nano gram per micro liter
+      µg/µl:
+        title: micro gram per micro liter
+      \%(W/W):
+        title: per cent weight by weight
+       # AK: how do we add a percentage sign without making it a comment?
+      \%(V/V):
+        title: per cent volume by volume
+      Units/ml:
+        title: units per milli liter
+      Other:
+        title: any other unit
+        ##AK: how do we declare other? And if we do it here, we should also do it for all others, right?
+
+  LiMiPotentialUnit:
+    description: Available values to describe the unit of a value that
+    represents an electric potential
+    permissible_values:
+      YV:
+        title: yotta Volt
+      ZV:
+        title: zetta Volt
+      EV:
+        title: exa Volt
+      PV:
+        title: peta Volt
+      TV:
+        title: tetra Volt
+      GV:
+        title: giga Volt
+      MV:
+        title: mega Volt
+      kV:
+        title: kilo Volt
+      hV:
+        title: Volt
+      daV:
+        title: deca Volt
+      V:
+        title: Volt
+      dV:
+        title: deci Volt
+      cV:
+        title: centi Volt
+      mV:
+        title: milli Volt
+      µV:
+        title: micro Volt
+      nV:
+        title: nano Volt
+      pV:
+        title: pico Volt
+      fV:
+        title: femto Volt
+      aV:
+        title: atto Volt
+      zV:
+        title: zepto Volt
+      yW:
+        title: yocto Volt
+
+
+
+
 
 
 
