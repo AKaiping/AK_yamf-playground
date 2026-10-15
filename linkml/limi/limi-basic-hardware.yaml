@@ -1198,6 +1198,15 @@ classes:
         inlined: true
         inlined_as_list: false
 
+  LiMiGenericFilter:
+    description:
+      A generic Filter positioned along the Light Path in addition to the
+      canonical fluorescence Excitation and Emission Filters.
+    notes:
+      - FIXME Should not be needed, because in this schema the parent Filter
+        class is _not_ abstract, so a "generic" filter can simply be a Filter.
+    is_a: LiMiFilter
+
 enums:
   LiMiHoffmanPlateSlitDesign:
     description:
