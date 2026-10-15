@@ -73,7 +73,7 @@ enums:
       Ym:
         title: yotta meter
       Zm:
-        title: zetta metter
+        title: zetta meter
       Em:
         title: exa meter
       Pm:
@@ -107,7 +107,7 @@ enums:
       fm:
         title: femto meter
       am:
-        title: atto metter
+        title: atto meter
       zm:
         title: zepto meter
       ym:
@@ -247,3 +247,180 @@ enums:
         title: radian
       gon:
         title: gradian
+
+  LiMiTemperatureUnit:
+    description: Available values to describe the unit of a value that represents a Temperature
+    permissible_values:
+      C:
+        title: celsius
+      F:
+        title: fahrenheit
+      K:
+        title: kelvin
+
+  LiMiPressureUnit:
+    description: Available values to describe the unit of a value that represents air pressure
+    permissible_values:
+      YPa:
+        title: yotta pascal
+      ZPa:
+        title: zetta pascal
+      EPa:
+        title: exa pascal
+      PPa:
+        title: peta pascal
+      TPa:
+        title: tetra pascal
+      GPa:
+        title: giga pascal
+      MPa:
+        title: mega pascal
+      kPa:
+        title: kilo pascal
+      hPa:
+        title: hecto pascal
+      daPa:
+        title: deca pascal
+      cPa:
+        title: centi pascal
+      mPa:
+        title: milli pascal
+      µPa:
+        title: micro pascal
+      nPa:
+        title: nano pascal
+      pPa:
+        title: pico pascal
+      fPa:
+        title: femto pascal
+      aPa:
+        title: atto pascal
+      zPa:
+        title: zepto pascal
+      yPa:
+        title: yocto pascal
+      bar:
+        title: bar
+      Mbar:
+        title: mega bar
+      kbar:
+        title: kilo bar
+      dbar:
+        title: deci bar
+      cbar:
+        title: centi bar
+      mbar:
+        title: milli bar
+      atm:
+        title: atmosphere
+      psi:
+        title: pound-force per square inch
+      Torr:
+        title: torr
+      mTorr:
+        title: milli torr
+      mmHg:
+        title: mm of mercury
+
+  LiMiElectricCurrentUnit:
+    description: Available values to describe the unit of a value that represents electric current
+    permissible_values:
+      A:
+        title: amperes
+      e-/pixel/s:
+        title: electrons per pixel per second
+      e- rms:
+        title: root mean square electrons
+        #AK: This is not a unit of electric current. Current is always electrons/time. For now we leave it since this is how the xsd is right now.
+
+  LiMiRatioUnit:
+    description: Available values to describe the unit of a value that represents a Rate
+    permissible_values:
+      bel:
+        title: bel
+      dB:
+        title: decibel
+
+  LiMiIrradianceUnit:
+    description: Available values to describe the unit of a value that represents Irradiance
+    permissible_values:
+      W/m2:
+        title: watt per squared meter
+      mW/µm2:
+        title: milli watt per squared micro meter
+      mW/nm2:
+        title: milli watt per squared nano meter
+      µW/µm2:
+        title: micro watt per squared micro meter
+      µW/nm2:
+        title: micro watt per squared nano meter
+
+  LiMiConcentrationUnit:
+    description: Available values to describe the unit of a value that represents concentration
+    permissible_values:
+      ng/µl:
+        title: nano gram per micro liter
+      µg/µl:
+        title: micro gram per micro liter
+      '%(W/V)':
+        title: per cent weight per volume
+       # AK: how do we add a percentage sign without making it a comment?
+      '%(V/V)':
+        title: per cent volume per volume
+      Units/ml:
+        title: units per milli liter
+
+  LiMiPotentialUnit:
+    description: Available values to describe the unit of a value that represents an electric potential
+    permissible_values:
+      YV:
+        title: yotta volt
+      ZV:
+        title: zetta volt
+      EV:
+        title: exa volt
+      PV:
+        title: peta volt
+      TV:
+        title: tetra volt
+      GV:
+        title: giga volt
+      MV:
+        title: mega volt
+      kV:
+        title: kilo volt
+      hV:
+        title: volt
+      daV:
+        title: deca volt
+      V:
+        title: volt
+      dV:
+        title: deci volt
+      cV:
+        title: centi volt
+      mV:
+        title: milli volt
+      µV:
+        title: micro volt
+      nV:
+        title: nano volt
+      pV:
+        title: pico volt
+      fV:
+        title: femto volt
+      aV:
+        title: atto volt
+      zV:
+        title: zepto volt
+      yW:
+        title: yocto volt
+
+
+
+
+
+
+
+
+
