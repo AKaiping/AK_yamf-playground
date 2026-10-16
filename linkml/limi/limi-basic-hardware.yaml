@@ -161,6 +161,46 @@ classes:
       - id
       - name
     attributes:
+      multiple_microscopes:
+        description: This field records whether (True) or not (False) multiple Microscopes share this Microscope Table. This is relevant because multiple Microscopes using the same table might affect stability and vibrations during Image Acquisition.
+        range: Boolean
+        annotations:
+          limi_tier: 2
+      type:
+        description: This field describes the type of this microscope table
+        range: LiMiMicroscopeType
+        required: true
+        annotations:
+          limi_tier: 2
+      table_width:
+        description: The width of this microscope table
+        range: float
+        annotations:
+          limi_tier: 3
+      table_width_unit:
+        description: The unit associated with the value representing the
+        width of the microscope table
+        range: LiMiLengthUnit
+        if_absent: LiMiLengthUnit(cm)
+        annotations:
+          limi_tier: 3
+      table_depth:
+        description: The depth of this microscope table
+        range: float
+        annotations:
+          limi_tier: 3
+      table_depth_unit:
+        description: The unit associated with the value representing the
+        depth of the microscope table
+        range: LiMiLengthUnit
+        if_absent: LiMiLengthUnit(cm)
+        annotations:
+          limi_tier: 3
+
+
+
+
+
       # Arnica to fill
 
   ################################
