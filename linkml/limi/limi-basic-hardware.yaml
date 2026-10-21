@@ -177,24 +177,28 @@ classes:
         annotations:
           limi_tier: 3
       table_width_unit:
-        description: The unit associated with the value representing the width of the microscope table
+        description: Unit associated with the value representing the width of
+          the microscope table
         range: LiMiLengthUnit
-        if_absent: LiMiLengthUnit(cm)
-        #AK made up this default unit
+        ifabsent: LiMiLengthUnit(cm)
         annotations:
           limi_tier: 3
+        notes:
+          -AK made up this default unit
       table_depth:
         description: The depth of this microscope table
         range: float
         annotations:
           limi_tier: 3
       table_depth_unit:
-        description: The unit associated with the value representing the depth of the microscope table
+        description: Unit associated with the value representing the depth of
+          the microscope table
         range: LiMiLengthUnit
         if_absent: LiMiLengthUnit(cm)
-        #AK made up this default unit
         annotations:
           limi_tier: 3
+        notes:
+          -AK made up this default unit
 
   ################################
   # Environmental control device #
@@ -408,17 +412,19 @@ classes:
       numerical_aperture:
         description: The Numerical Aperture (NA) of this device expressed as a floating-point (real) number. NA can be calculated from the Angular Aperture (alpha) using the following formula, NA = n(sin alpha), and is a measure of how much of the incident light actually passes through this device. The larger the angular aperture, the more information this device can transmit. Expected range 0.02 - 1.5.
         range: float
-        #AK has not added a min max constraint because this range could expand.
         annotations:
           limi_tier: 3
         required: true
+        notes:
+          -AK has not added a min max constraint because this range could expand.
       acceptance_angle:
         description: The angle within which the light beam produced by a Light Source may be coupled with the bound modes of this Light Guide.
         range: float
         annotations:
           limi_tier: 3
       acceptance_angle_unit:
-        description: The unit associated with the value of acceptance angle of the light guide
+        description: Unit associated with the value of acceptance angle of
+        the light guide
         range: LiMiAngleUnit
         annotations:
           limi_tier: 3
@@ -430,9 +436,10 @@ classes:
       material_name:
         description: This field records the chemical composition or the non-proprietary trade designation of the material used to construct this Light Guide.
         range: LiMiLightGuideMaterialName
-        #Do we want to make a unified material class enum
         annotations:
           limi_tier: 3
+        notes:
+          -Do we want to make a unified material class enum
       single_mode:
         description: This field records whether (True) this Light Guide is single-mode. If not (False), then the guide is assumed to be multi-modal.
         range: boolean
@@ -451,7 +458,7 @@ classes:
       diameter_unit:
         description: This fields records the unit associated with the value representing the outer diameter of this Light Guide.
         range: LiMiLengthUnit
-        if_absent: LiMiLengthUnit(mm)
+        ifabsent: LiMiLengthUnit(mm)
         annotations:
           limi_tier: 3
       wavelength_range:
@@ -482,7 +489,9 @@ classes:
         annotations:
           limi_tier: 3
         required: true
-        #We should have an enum for this but For now the model does not have it.
+        notes:
+          -AK- We should have an enum for this but For now the model does not 
+          have it.
       
   #################
   # Optics holder #
@@ -697,8 +706,71 @@ classes:
       - id
       - name
       - object_type
+    notes:
+      -origdef This element describes a Mirror positioned in the Ligth Path for one or more Channels available for this Instrument. An Instrument may have several Mirrors of different types, such as Dichroic, Beamsplitter or Reflector. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr Wheel, or Filter Slider.
     attributes:
-      # Arnica to fill
+      #Arnica has filled
+    optics_holder_position:
+      description: This field records the position of this Mirroring Device in a Optics Holder of any kind, such as a Slider, Turret or Wheel.
+      annotations:
+        limi_tier: 2
+    mirror_type:
+      description: This field records the general category of this Mirror.
+      range: LiMiMirrorType
+      annotations:
+        limi_tier: 3
+      required: true
+    geometry:
+      description: This field records the optimal angle of incidence (AOI) for this Mirror. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection AOI is by definition equal to the Angle Of Reflection (AOR).
+      range: LiMiMirrorGeometry
+      annotations:
+        limi_tier: 3
+    diameter:
+      description: This field describes the Diameter of this optical element.
+      range: float
+      annotations:
+        limi_tier: 3
+    diameter_unit:
+      description: Unit associated with the value representing the diameter of a mirror
+      range: LiMiLengthUnit
+      ifabsent: LiMiLengthUnit(cm)
+      annotations:
+        limi_tier: 3
+    radius_of_curvature:
+      description: The radius of curvature of this Mirror. A spherical lens or Mirror surface has a center of curvature located either along or decentered from the system local optical axis. The vertex of the lens surface is located on the local optical axis. The distance from the vertex to the center of curvature is the radius of curvature of the surface.
+      range: float
+      annotations:
+        limi_tier: 3
+    radius_of_curvature_unit:
+      description: Unit associated with the value representing the radius of curvature of a mirror
+      range: LiMiLengthUnit
+      ifabsent: LiMiLengthUnit(cm)
+      annotations:
+        limi_tier: 3
+    angle_of_incidence:
+      description: This field records the optimal angle of incidence (AOI) for this Mirror. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection AOI is by definition equal to the Angle Of Reflection (AOR).
+      range: float
+      annotations:
+        limi_tier: 3
+    angle_of_incidence_unit:
+      description: Unit associated with the value representing the optimal angle of incidence for this mirror
+      range: LiMiAngleUnit
+      ifabsent: LiMiLengthUnit(deg)
+      annotations:
+        limi_tier: 3
+    substrate_type:
+      description: This field records the type of Substrate that is used for this Mirror. It is typically a ground and polished piece of optical glass.
+      annotations:
+        limi_tier: 3
+    substrate_material:
+      description: This field records the chemical composition or the designation of the substrate of this Mirroring Device. The substrate is typically composed of a glass material with low autofluorescence, such as UV-grade fused silica or Borofloat.
+      range: LiMiOpticalMaterialName
+      annotations:
+        limi_tier: 3
+    glass_code:
+      description: If available, this field records the international Glass Code of the material that constitutes this Mirror. The Glass Code designation is based on U.S. military standard MIL-G-174, and it consists of a six-digit number specifying the glass according to its Refractive Index nd at the Fraunhofer d- (or D3-) line, and its Abbe Number Vd also taken at that line. The resulting Glass Code is the value of nd-1 rounded to three digits, followed by Vd rounded to three digits, with all decimal points ignored. For example, BK7 has nd = 1.5168 and Vd = 64.17, giving a six-digit Glass Code of 517642.
+      annotations:
+        limi_tier: 3
 
   LiMiDichroic:
     description:
@@ -1587,3 +1659,72 @@ enums:
       Transverse Magnetic:
       Hybrid:
       Other:
+
+
+  LiMiMirrorType:
+    description: The general types of mirrors
+    permissible_values:
+      Convex:
+      Concave:
+      Planar:
+      Other:
+
+  LiMiMirrorGeometry:
+    description: This field records the geometrical shape of the surface(s) of this Mirror.
+    permissible_values:
+      Aspherical:
+      Cylindrical:
+      Ellipsoidal:
+      Hyperboloidal:
+      Paraboloidal:
+      Spherical:
+      Other:
+
+  LiMiOpticalMaterialName:
+    description: This field records the chemical composition or the designation of the substrate of this Mirroring Device.
+    permissible_values:
+      alpha-Barium Borate:
+      Barium Crown (BAK/N-BAK):
+      Barium Flint (BAF/N-BAF):
+      Barium Heavy Flint (BASF/N-BASF):
+      Barium Light Flint (BALF/N-BALF):
+      Borofloat:
+      Boron Crown (BK/N-BK):
+      Borosilicate:
+      Calcite:
+      Calcium:
+      Fluoride (CaF2):
+      Crown (K/N-K):
+      Crown Flint (KF/N-NK):
+      Crystal Quartz:
+      Dense Crown (SK/N-SK):
+      Dense Flint (SF/N-SF):
+      Extra Dense Crown (SSK/N-SSK):
+      Extra Light Flint (LLF):
+      Flint (F/N-F):
+      Fluorine Crown (FK/N-FK):
+      Germanium:
+      Lanthanum Crown (LAK/N-LAK):
+      Lanthanum Dense Flint (LASF/N-LASF):
+      Lanthanum Flint (LAFN/N-LAF):
+      Light Flint (LF):
+      Magnesium Fluoride (MgF2):
+      Phosphate Crown (PK/N-PK):
+      Phosphate Dense (PSK/N-PSK):
+      Polytetrafluoroethylene (PFTE):
+      Pyrex:
+      Rutile (TiO2):
+      Short Flint Special (KZFS/N-KZFS):
+      Silicon (Si):
+      UV-Grade Fused Silica (UVFS):
+      Yttrium Orthovanadate (YVO4):
+      Zerodur (Lithium Aluminum Silicon Oxide):
+      Zinc Crown (ZK/N-ZK):
+      Zinc Selenide (ZnSe):
+      Other:
+
+
+
+
+
+
