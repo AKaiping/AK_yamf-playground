@@ -184,7 +184,7 @@ classes:
         annotations:
           limi_tier: 3
         notes:
-          -AK made up this default unit
+          - AK made up this default unit
       table_depth:
         description: The depth of this microscope table
         range: float
@@ -198,7 +198,7 @@ classes:
         annotations:
           limi_tier: 3
         notes:
-          -AK made up this default unit
+          - AK made up this default unit
 
   ################################
   # Environmental control device #
@@ -416,7 +416,7 @@ classes:
           limi_tier: 3
         required: true
         notes:
-          -AK has not added a min max constraint because this range could expand.
+          - AK has not added a min max constraint because this range could expand.
       acceptance_angle:
         description: The angle within which the light beam produced by a Light Source may be coupled with the bound modes of this Light Guide.
         range: float
@@ -439,7 +439,7 @@ classes:
         annotations:
           limi_tier: 3
         notes:
-          -Do we want to make a unified material class enum
+          - Do we want to make a unified material class enum
       single_mode:
         description: This field records whether (True) this Light Guide is single-mode. If not (False), then the guide is assumed to be multi-modal.
         range: boolean
@@ -490,7 +490,7 @@ classes:
           limi_tier: 3
         required: true
         notes:
-          -AK- We should have an enum for this but For now the model does not 
+          - AK- We should have an enum for this but For now the model does not
           have it.
       
   #################
@@ -707,7 +707,7 @@ classes:
       - name
       - object_type
     notes:
-      -origdef This element describes a Mirror positioned in the Ligth Path for one or more Channels available for this Instrument. An Instrument may have several Mirrors of different types, such as Dichroic, Beamsplitter or Reflector. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr Wheel, or Filter Slider.
+      - origdef This element describes a Mirror positioned in the Ligth Path for one or more Channels available for this Instrument. An Instrument may have several Mirrors of different types, such as Dichroic, Beamsplitter or Reflector. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr Wheel, or Filter Slider.
     attributes:
       #Arnica has filled
     optics_holder_position:
