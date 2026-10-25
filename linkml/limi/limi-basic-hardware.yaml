@@ -233,6 +233,8 @@ classes:
           annotations:
             limi_tier: 2
           required: true
+          notes:
+            - DGG - This matches what is described by the spreadsheet, but it doesn’t make much sense in my opinion-- there’s an inherent contradiction in saying that a field belongs to the second tier and saying that it is required.
         vibration_control:
           description: This field captures whether (True) or not (False) this Environmental Control Device provides vibration control.
           range: boolean
@@ -383,6 +385,7 @@ classes:
           limi_tier: 3
       coupling_lens_ref:
         description: This is a reference to a Lens positioned at the connection between this Light Source coupling element and the Microscope Stand.
+        range: LiMiLens
         annotations:
           limi_tier: 2
         inlined: false
@@ -439,7 +442,8 @@ classes:
         annotations:
           limi_tier: 3
         notes:
-          - Do we want to make a unified material class enum
+          - AK- Do we want to make a unified material class enum
+          - DGG Possibly. Another option would be to use a “dynamic enum” using an ontology of materials. Let’s leave it like that for now.
       single_mode:
         description: This field records whether (True) this Light Guide is single-mode. If not (False), then the guide is assumed to be multi-modal.
         range: boolean
@@ -710,67 +714,67 @@ classes:
       - origdef This element describes a Mirror positioned in the Ligth Path for one or more Channels available for this Instrument. An Instrument may have several Mirrors of different types, such as Dichroic, Beamsplitter or Reflector. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr Wheel, or Filter Slider.
     attributes:
       #Arnica has filled
-    optics_holder_position:
-      description: This field records the position of this Mirroring Device in a Optics Holder of any kind, such as a Slider, Turret or Wheel.
-      annotations:
-        limi_tier: 2
-    mirror_type:
-      description: This field records the general category of this Mirror.
-      range: LiMiMirrorType
-      annotations:
-        limi_tier: 3
-      required: true
-    geometry:
-      description: This field records the optimal angle of incidence (AOI) for this Mirror. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection AOI is by definition equal to the Angle Of Reflection (AOR).
-      range: LiMiMirrorGeometry
-      annotations:
-        limi_tier: 3
-    diameter:
-      description: This field describes the Diameter of this optical element.
-      range: float
-      annotations:
-        limi_tier: 3
-    diameter_unit:
-      description: Unit associated with the value representing the diameter of a mirror
-      range: LiMiLengthUnit
-      ifabsent: LiMiLengthUnit(cm)
-      annotations:
-        limi_tier: 3
-    radius_of_curvature:
-      description: The radius of curvature of this Mirror. A spherical lens or Mirror surface has a center of curvature located either along or decentered from the system local optical axis. The vertex of the lens surface is located on the local optical axis. The distance from the vertex to the center of curvature is the radius of curvature of the surface.
-      range: float
-      annotations:
-        limi_tier: 3
-    radius_of_curvature_unit:
-      description: Unit associated with the value representing the radius of curvature of a mirror
-      range: LiMiLengthUnit
-      ifabsent: LiMiLengthUnit(cm)
-      annotations:
-        limi_tier: 3
-    angle_of_incidence:
-      description: This field records the optimal angle of incidence (AOI) for this Mirror. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection AOI is by definition equal to the Angle Of Reflection (AOR).
-      range: float
-      annotations:
-        limi_tier: 3
-    angle_of_incidence_unit:
-      description: Unit associated with the value representing the optimal angle of incidence for this mirror
-      range: LiMiAngleUnit
-      ifabsent: LiMiLengthUnit(deg)
-      annotations:
-        limi_tier: 3
-    substrate_type:
-      description: This field records the type of Substrate that is used for this Mirror. It is typically a ground and polished piece of optical glass.
-      annotations:
-        limi_tier: 3
-    substrate_material:
-      description: This field records the chemical composition or the designation of the substrate of this Mirroring Device. The substrate is typically composed of a glass material with low autofluorescence, such as UV-grade fused silica or Borofloat.
-      range: LiMiOpticalMaterialName
-      annotations:
-        limi_tier: 3
-    glass_code:
-      description: If available, this field records the international Glass Code of the material that constitutes this Mirror. The Glass Code designation is based on U.S. military standard MIL-G-174, and it consists of a six-digit number specifying the glass according to its Refractive Index nd at the Fraunhofer d- (or D3-) line, and its Abbe Number Vd also taken at that line. The resulting Glass Code is the value of nd-1 rounded to three digits, followed by Vd rounded to three digits, with all decimal points ignored. For example, BK7 has nd = 1.5168 and Vd = 64.17, giving a six-digit Glass Code of 517642.
-      annotations:
-        limi_tier: 3
+      optics_holder_position:
+        description: This field records the position of this Mirroring Device in a Optics Holder of any kind, such as a Slider, Turret or Wheel.
+        annotations:
+          limi_tier: 2
+      mirror_type:
+        description: This field records the general category of this Mirror.
+        range: LiMiMirrorType
+        annotations:
+          limi_tier: 3
+        required: true
+      geometry:
+        description: This field records the optimal angle of incidence (AOI) for this Mirror. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection AOI is by definition equal to the Angle Of Reflection (AOR).
+        range: LiMiMirrorGeometry
+        annotations:
+          limi_tier: 3
+      diameter:
+        description: This field describes the Diameter of this optical element.
+        range: float
+        annotations:
+          limi_tier: 3
+      diameter_unit:
+        description: Unit associated with the value representing the diameter of a mirror
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(cm)
+        annotations:
+          limi_tier: 3
+      radius_of_curvature:
+        description: The radius of curvature of this Mirror. A spherical lens or Mirror surface has a center of curvature located either along or decentered from the system local optical axis. The vertex of the lens surface is located on the local optical axis. The distance from the vertex to the center of curvature is the radius of curvature of the surface.
+        range: float
+        annotations:
+          limi_tier: 3
+      radius_of_curvature_unit:
+        description: Unit associated with the value representing the radius of curvature of a mirror
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(cm)
+        annotations:
+          limi_tier: 3
+      angle_of_incidence:
+        description: This field records the optimal angle of incidence (AOI) for this Mirror. The AOI is the angle between the optical axis of the incident light and the axis normal to the surface of the Mirror. In specular reflection AOI is by definition equal to the Angle Of Reflection (AOR).
+        range: float
+        annotations:
+          limi_tier: 3
+      angle_of_incidence_unit:
+        description: Unit associated with the value representing the optimal angle of incidence for this mirror
+        range: LiMiAngleUnit
+        ifabsent: LiMiLengthUnit(deg)
+        annotations:
+          limi_tier: 3
+      substrate_type:
+        description: This field records the type of Substrate that is used for this Mirror. It is typically a ground and polished piece of optical glass.
+        annotations:
+          limi_tier: 3
+      substrate_material:
+        description: This field records the chemical composition or the designation of the substrate of this Mirroring Device. The substrate is typically composed of a glass material with low autofluorescence, such as UV-grade fused silica or Borofloat.
+        range: LiMiOpticalMaterialName
+        annotations:
+          limi_tier: 3
+      glass_code:
+        description: If available, this field records the international Glass Code of the material that constitutes this Mirror. The Glass Code designation is based on U.S. military standard MIL-G-174, and it consists of a six-digit number specifying the glass according to its Refractive Index nd at the Fraunhofer d- (or D3-) line, and its Abbe Number Vd also taken at that line. The resulting Glass Code is the value of nd-1 rounded to three digits, followed by Vd rounded to three digits, with all decimal points ignored. For example, BK7 has nd = 1.5168 and Vd = 64.17, giving a six-digit Glass Code of 517642.
+        annotations:
+          limi_tier: 3
 
   LiMiDichroic:
     description:
