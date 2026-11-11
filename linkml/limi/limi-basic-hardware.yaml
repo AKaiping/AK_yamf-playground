@@ -1986,7 +1986,7 @@ enums:
 
   LiMiPhaseRingNumber:
     description: This field records the phase number indicating the size of the annular slit of the phase ring
-    #AK made this definition up
+    #AK made this definition up.
     permissible_values:
       PhL:
       Ph1:
