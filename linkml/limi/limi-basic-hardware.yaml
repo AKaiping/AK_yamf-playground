@@ -1591,7 +1591,24 @@ classes:
       - id
       - name
     attributes:
-      # Arnica to fill
+      # Arnica has filled
+      sample_holder_type:
+        description: This field describes the type of Specimen Holder this Stage Insert is designed to hold.
+        range: LiMiSampleHolderType
+        required: true
+        annotations:
+          limi_tier: 2
+      temperature_controlled:
+        description: This field records whether this Stage Insert is Temperature Controlled (True), or not (False).
+        range: boolean
+        required: true
+        annotations:
+          limi_tier: 2
+      number_of_slots:
+        description: This field describes the number of Specimen Holder slots on this Stage Insert.
+        range: integer
+        annotations:
+          limi_tier: 2
 
   ##############################
   # Sample positioning devices #
@@ -2419,7 +2436,15 @@ enums:
       Triangular:
       Other:
 
-
+  LiMiSampleHolderType:
+    description:
+    permissible_values:
+      Chambered Coverslip:
+      Culture Plate:
+      Microscope Slide:
+      Multiwell Plate:
+      Petridish:
+      Other:
 
 
 
