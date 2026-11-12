@@ -1290,7 +1290,7 @@ classes:
         annotations:
           limi_tier: 3
       density_unit:
-        description: Unit associated with a value representing the density of the material a lens is made of
+        description: Unit associated with a value representing a material's density
         range: LiMiDensityUnit
         ifabsent: LiMiDensityUnit(kg/m3)
         annotations:
@@ -1469,7 +1469,116 @@ classes:
       - id
       - name
     attributes:
-      # Arnica to fill
+      # Arnica has filled
+      dic:
+        description: This field records whether this Prism is used for Differential Interference Contrast (DIC) microscopy and, if so, what DIC-compatible type it is (i.e., deSenarmont, Nomarski or Wollaston).
+        range: LiMiDICPrismType
+      function:
+        description: This field records the function of this Prism. Beam-shaping (i.e., Anamorphic) Prism pairs are used for reshaping the profile of a laser beam. For example, the elliptical beam from a laser diode can be transformed into a beam with circular cross-section, by magnifying the elliptical beam in one dimension. They can also be used to convert a circular beam into an elliptical beam. Dispersing prisms can be employed to bend and separate light into its component wavelengths. Polarizing prisms (i.e., Glan–Thompson, Nomarski, Wollaston) are birefringent crystals, which divide incident non-polarized light into separate components polarized orthogonally to each other. Reflecting prisms are useful for redirecting (i.e., flip, invert, rotate, etc.) light beams by total internal reflection or for dividing them into two or more separate beams (i.e., beam-splitting) one.
+        range: LiMiPrismFunction
+        required: true
+        annotations:
+          limi_tier: 2
+      condenser:
+        description: This field records whether this Prism is within the Condenser (True) or the Objective (False).
+        range: boolean
+        required: true
+        annotations:
+          limi_tier: 2
+      oil_objective:
+        description: This field records whether this Prism is designed to work with oil Objectives (True) or not (False).
+        range: boolean
+        required: true
+        annotations:
+          limi_tier: 2
+      compound:
+        description: This field records whether this Prism is a Compound Prism (i.e., a set of multiple triangular prism elements placed in contact, and often cemented together to form a solid assembly; True) or a Simple Prism (False).
+        range: boolean
+        annotations:
+          limi_tier: 2
+      refractive_index:
+        description: This field records the Refractive Index of the material this Prism is made of, as specified by the Manufacturer.
+        range: float
+        annotations:
+          limi_tier: 3
+      reflectance:
+        description: This field records the maximum amount of light this Prism is capable of transmitting at peak Wavelength. It is represented as a fractional value from 0.0 to 1.0.
+        range: float
+        required: true
+        annotations:
+          limi_tier: 3
+      angle_of_incidence:
+        description: This field records the Angle Of Incidence (AOI) is the angle between a beam of light incident on the Prism surface and the line perpendicular to the surface at the point of incidence, called the normal.
+        range: float
+        annotations:
+          limi_tier: 3
+      angle_of_incidence_unit:
+        description: unit associated with the value representing an angle of incidence
+        range: LiMiAngleUnit
+        ifabsent: LiMiAngleUnit(deg)
+        annotations:
+          limi_tier: 3
+      deviation_angle:
+        description: This field records the Deviation Angle of this Prism. A beam passing through an object like a prism is deflected twice- once entering, and again when exiting. The sum of these two deflections is called the deviation angle and is measured with respect to the incident ray.
+        range: float
+        annotations:
+          limi_tier: 3
+      deviation_angle_unit:
+        description: unit associated with the value representing a deviation angle
+        range: LiMiAngleUnit
+        ifabsent: LiMiAngleUnit(deg)
+        annotations:
+          limi_tier: 3
+      prism_angle:
+        description: This field records the Angle between two surfaces of this Prism.
+        range: float
+        annotations:
+          limi_tier: 3
+      prism_angle_unit:
+        description: unit associated with the value representing a prism angle
+        range: LiMiAngleUnit
+        ifabsent: LiMiAngleUnit(deg)
+        annotations:
+          limi_tier: 3
+      design:
+        description: This field records the shape of the Prism with specific reference to the angles defined by its faces.
+        range: LiMiPrismDesign
+        annotations:
+          limi_tier: 3
+      abbe_number:
+        description: This field records the Abbe number of this Prism. The Abbe Number is a measure of the material's dispersion (variation of Refractive Index versus Wavelength), with high values indicating low dispersion.
+        range: float
+        annotations:
+          limi_tier: 3
+      material_name:
+        description: This field records the chemical composition or designation of the Material this Prism is made of.
+        range: LiMiOpticalMaterial
+        annotations:
+          limi_tier: 3
+      glass_code:
+        description: This field records the Density of the material this Prism is made of.
+        annotations:
+          limi_tier: 3
+      density:
+        description: This field records the Density of the material this Prism is made of.
+        range: float
+        annotations:
+          limi_tier: 3
+      density_unit:
+        description: Unit associated with the value representing a material's density
+        range: LiMiDensityUnit
+        ifabsent: LiMiDensityUnit(kg/m3)
+        annotations:
+          limi_tier: 3
+      wavelength_range:
+        description:
+          This element records the Range of Wavelengths this device is designed
+          for, according to the Manufacturer. Multiple of this element may be
+          used.
+        range: LiMiWavelengthRange
+        annotations:
+          limi_tier: 3
+
 
   ################
   # Stage insert #
@@ -2263,6 +2372,53 @@ enums:
       Other:
     notes:
       - AK Some of these values seem to be mixing two different concepts
+
+  LiMiDICPrismType:
+    description: This field records the type of prism used in DIC microscopy
+    permissible_values:
+      deSenarmont:
+      Nomarski:
+      Wollaston:
+      None:
+
+  LiMiPrismFunction:
+    description: his field records the function of this prism.
+    permissible_values:
+      Beam-shaping:
+      Deflecting:
+      Polarizing:
+      Reflecting:
+      Refracting (or Dispersing):
+      Other:
+
+  LiMiPrismDesign:
+    description: This field records the shape of the Prism reference to the angles defined by its faces.
+    permissible_values:
+      Rhomboid:
+      Wedge:
+      Glan-Foucault:
+      Glan-Taylor:
+      Glan-Thompson:
+      Nicol:
+      Nomarski:
+      Rochon:
+      Senarmont:
+      Wollaston:
+      Abbe-Konig:
+      Amici-roof:
+      Dove:
+      Penta:
+      Porro:
+      Porro-Abbe:
+      Right-Angle:
+      Schmidt–Pechan:
+      Abbe:
+      Amici:
+      Grism:
+      Pellin–Broca:
+      Triangular:
+      Other:
+
 
 
 
