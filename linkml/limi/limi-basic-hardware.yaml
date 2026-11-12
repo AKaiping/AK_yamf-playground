@@ -615,7 +615,7 @@ classes:
         inlined: false
 
   LiMiEmissionFilterWheel:
-    description: A circular holder for multiple invidual Emission Filters.
+    description: A circular holder for multiple individual Emission Filters.
     is_a: LiMiFilterWheel
     attributes:
       emission_filters:
@@ -652,7 +652,7 @@ classes:
         inlined: false
 
   LiMiEmissionFilterSlider:
-    description: A linear holder for multiple invidual Emission Filters.
+    description: A linear holder for multiple individual Emission Filters.
     is_a: LiMiFilterSlider
     attributes:
       emission_filters:
@@ -716,7 +716,7 @@ classes:
       - name
       - object_type
     notes:
-      - origdef This element describes a Mirror positioned in the Ligth Path for one or more Channels available for this Instrument. An Instrument may have several Mirrors of different types, such as Dichroic, Beamsplitter or Reflector. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filtr Wheel, or Filter Slider.
+      - origdef This element describes a Mirror positioned in the Light Path for one or more Channels available for this Instrument. An Instrument may have several Mirrors of different types, such as Dichroic, Beamsplitter or Reflector. This element can be associated with an optional Optics Holder, such as a Filter Cube, Filter Turret, Filter Wheel, or Filter Slider.
     attributes:
       #Arnica has filled
       optics_holder_position:
@@ -773,7 +773,7 @@ classes:
           limi_tier: 3
       substrate_material:
         description: This field records the chemical composition or the designation of the substrate of this Mirroring Device. The substrate is typically composed of a glass material with low autofluorescence, such as UV-grade fused silica or Borofloat.
-        range: LiMiOpticalMaterialName
+        range: LiMiOpticalMaterial
         annotations:
           limi_tier: 3
       glass_code:
@@ -842,13 +842,13 @@ classes:
 
   LiMiStandardDichroic:
     description:
-      A Dichroic positioned in the standard Ligth Path for one or more Channels
+      A Dichroic positioned in the standard Light Path for one or more Channels
       available for an Instrument.
     is_a: LiMiDichroic
 
   LiMiAdditionalDichroic:
     description:
-      A generic Additional Dichroic positioned in the Ligth Path for one or more
+      A generic Additional Dichroic positioned in the Light Path for one or more
       Channel available for an Instrument.
     is_a: LiMiDichroic
 
@@ -887,7 +887,7 @@ classes:
         range: float
         minimum_value: 0.0
       FWHM_bandwidth_unit:
-        description: Unit associated with the FWHM Bandwith value.
+        description: Unit associated with the FWHM Bandwidth value.
         range: LiMiLengthUnit
       notes:
         - AK How do we declare this class under specific optical elements?
@@ -1052,7 +1052,7 @@ classes:
 
   LiMiIrisDiaphragm:
     description:
-      A Diaphragm, positioned trasversally to the optical axis bounded by
+      A Diaphragm, positioned transversally to the optical axis bounded by
       multiple leaves, usually metal, arranged so as to provide an opening of
       variable size, which is adjustable by means of a mechanical control.
     is_a: LiMiOpticalAperture
@@ -1088,8 +1088,8 @@ classes:
     description:
       A device that opens and closes, and that may be mechanically or
       electro-mechanically controlled. Shutters are typically used to control
-      the Light that raches the sample (i.e., to limit phototoxicity and
-      photobleaching especially in case of live specimens),  or the Detecrtor at
+      the Light that reaches the sample (i.e., to limit phototoxicity and
+      photobleaching especially in case of live specimens),  or the Detector at
       any one time. They can also be used for Excitation or Emission Wavelength
       selection.
     is_a: LiMiOpticalAperture
@@ -1166,7 +1166,135 @@ classes:
       - name
       - object_type
     attributes:
-      # Arnica to fill
+      # Arnica has filled
+      magnification:
+        description: This field records the nominal Magnification provided by this Lens as specified by the Manufacturer.
+        range: float
+        required: true
+      lens_na:
+        description: This field captures the Numerical Aperture (NA) of this Lens expressed as a floating-point (real) number. NA is a number that was defined initially by Abbe to characterize Objectives and Condensers. NA can be calculated by the expression n sin alpha, where n is the Refractive Index of the medium between the Lens and the Sample, and alpha is half the Angular Aperture of the Lens. NA is a measure of how much of the illumination that leaves the specimen actually passes through the Lens. The larger the NA, the more information the lens can transmit. Expected range 0.02 - 1.5.
+        range: float
+      infinity:
+        description: This field records whether (True) or not (False) this Lens is infinity corrected. An Infinity-corrected Lens is fixed for an infinite sample to primary image distance. It needs to be used with a Tube Lens of appropriate focal length to obtain the specified magnification.
+        range: boolean
+        annotations:
+          limi_tier: 2
+      composite:
+        description: This field records whether this Lens is Composite (True) or Simple (False).
+        range: boolean
+        annotations:
+          limi_tier: 3
+        required: true
+      shape:
+        description: This field records the shape of the profile (e.g., concave vs. convex) of this Lens. Please note that this attribute is often used to classify Lenses into categories.
+        range: LiMiLensShape
+        #AK: orig LensShapeType
+        annotations:
+          limi_tier: 3
+        required: true
+      geometry:
+        description: This field records the geometrical shape of this Lens' surface(s).
+        range: LiMiLensGeometry
+        annotations:
+          limi_tier: 3
+      coating:
+        description: An optical Coating consists of one or more thin layers of material deposited on an optical component such as a Lens or Mirror, which alters the way in which the optic reflects and transmits light. This field records the optical Coating used for this Lens.
+        annotations:
+          limi_tier: 3
+        notes:
+          - AK- for later model revision-- add an enum with option other
+      attenuation_coefficient:
+        description: This field records the Attenuation Coefficient (AC) of this optical element. The AC (aka blocking coefficient) is a material property that characterizes the degree to which light is being blocked (i.e., scattered or absorbed) by it. AC is used as a measure of the out-of-band blocking of an optical Lens, Filter, Dichroic mirror over an extended range of the spectrum. AC is often reported in units of optical density (OD), whereas OD= -log10(T), and T=Transmittance (0≤T≤1).
+        range: float
+        annotations:
+          limi_tier: 3
+      working_distance:
+        description: This field reports the Working Distance of this Lens under normal operating conditions. The Working Distance is the distance (in air, or in the specified immersion liquid) between the front of an Objective and the surface of the cover glass or of the specimen if uncovered.
+        range: float
+        annotations:
+          limi_tier: 2
+      working_distance_unit:
+        description: Unit associated with the value representing the working distance of a lens
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(mm)
+        annotations:
+          limi_tier: 2
+      image_distance:
+        description: This field records the distance in air between the rear principal plane of this Lens and the primary Image plane.
+        range: float
+        annotations:
+          limi_tier: 3
+      image_distance_unit:
+        description: Unit associated with the value representing the image distance of a lens
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(mm)
+        annotations:
+          limi_tier: 3
+      front_focal_length:
+        description: This field records the distance (f) measured along the optical axis from the front principal plane of this Lens to the front focal plane (F).
+        range: float
+        annotations:
+          limi_tier: 3
+      front_focal_length_unit:
+        description: Unit associated with the value representing the front focal length of a lens
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(mm)
+        annotations:
+          limi_tier: 3
+      back_focal_length:
+        description: This field records the distance (f) measured along the optical axis from the front principal plane of this Lens to the front focal plane (F).
+        range: float
+        annotations:
+          limi_tier: 3
+      back_focal_length_unit:
+        description: Unit associated with the value representing the back focal length of a lens
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(mm)
+        annotations:
+          limi_tier: 3
+      radius_of_curvature:
+        description: This field records the Radius of Curvature of this Lens. A spherical Lens or Mirror surface has a center of curvature located either along or decentered from the system local optical axis. The vertex of the lens surface is located on the local optical axis. The distance from the vertex to the center of curvature is the Radius of Curvature of the surface.
+        range: float
+        annotations:
+          limi_tier: 3
+      radius_of_curvature_unit:
+        description: Unit associated with the value representing the radius of curvature of a lens
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(cm)
+        #AK made this default unit up
+        annotations:
+          limi_tier: 3
+      material_name:
+        description: This field records the chemical composition or designation of the Material this Lens is made of.
+        range: LiMiOpticalMaterial
+        #AK changed name of this enum
+        annotations:
+          limi_tier: 3
+      glass_code:
+        description: If available, this field records the international Glass Code of the material that constitutes this Lens. The Glass Code designation is based on U.S. military standard MIL-G-174, and it consists of a six-digit number specifying the glass according to its Refractive Index nd at the Fraunhofer d- (or D3-) line, and its Abbe Number Vd also taken at that line. The resulting Glass Code is the value of nd-1 rounded to three digits, followed by Vd rounded to three digits, with all decimal points ignored. For example, BK7 has nd = 1.5168 and Vd = 64.17, giving a six-digit Glass Code of 517642.
+        annotations:
+          limi_tier: 3
+      refractive_index:
+        description: This field records the Refractive Index of the material this Lens is made of, as specified by the Manufacturer. The Refractive Index is the ratio of the speed of light (more precisely, the phase velocity) in a vacuum versus that in a given medium.
+        range: float
+        annotations:
+           limi_tier: 2
+      abbe_number:
+        description: This field records the Abbe number of this Lens. The Abbe Number is a measure of the material's dispersion (variation of Refractive Index versus Wavelength), with high values indicating low dispersion.
+        range: float
+        annotations:
+          limi_tier: 3
+      density:
+        description: This field records the Density of the material this Lens is made of.
+        range: float
+        annotations:
+          limi_tier: 3
+      density_unit:
+        description: Unit associated with a value representing the density of the material a lens is made of
+        range: LiMiDensityUnit
+        ifabsent: LiMiDensityUnit(kg/m3)
+        annotations:
+          limi_tier: 3
 
   LiMiMagnificationChanger:
     description:
@@ -1182,7 +1310,7 @@ classes:
 
   LiMiGenericLens:
     description:
-      Any additional generic Lense positioned in the Light Path for a given
+      Any additional generic Lens positioned in the Light Path for a given
       Channel.
     notes:
       - DGG Should not be needed. If the exact type of lens is not known, the
@@ -1212,7 +1340,7 @@ classes:
       light from the Light Source and concentrate it into a cone of light that
       illuminates the specimen. The aperture and angle of the light cone must be
       adjusted (via the size of the diaphragm) for each different objective Lens
-      with different numerical apertures. Conserser Lenses are typically housed
+      with different numerical apertures. Condenser Lenses are typically housed
       within a specific component of the Microscope called the Condenser.
     is_a: LiMiLens
 
@@ -1247,7 +1375,7 @@ classes:
 
   LiMiPolarizationOptics:
     description:
-      A Polarization device positioned in the Ligth Path for an Instrument. A
+      A Polarization device positioned in the Light Path for an Instrument. A
       Polarization device is an optical filter rotatable through 360° that lets
       light waves of a specific polarization pass through while blocking light
       waves of other polarizations. This element can be associated with an
@@ -1257,7 +1385,62 @@ classes:
       - id
       - name
     attributes:
-      # Arnica to fill
+      # Arnica has filled
+      function:
+        description: This field records whether this Polarization Optics is used to generate (Polarizer) or to analyze (Analyzer) polarized light.
+        range: LiMiPolarizationOpticsFunction
+        required: true
+      cross_polarizer:
+        description: This field records whether (True) or not (False) this Polarization Optics is a combination of an Analyzer and a Polarizer positioned orthogonal to each other.
+        range: boolean
+        required: true
+        annotations:
+          limi_tier: 2
+      dic:
+        description: This field records whether (True) or not (False) this Polarization Optics is used for Differential Interference Contrast (DIC) microscopy.
+        range: boolean
+        required: true
+        annotations:
+          limi_tier: 2
+      beam_splitter:
+        description: This field records whether (True) or not (False) this is PolarizationOptics has a beam splitter function.
+        range: boolean
+        annotations:
+          limi_tier: 2
+      faraday_isolator:
+        description: This field records whether (True) or not (False) this PolarizationOptics is a Faraday Isolator. A Faraday Isolator is an optical component which allows light to pass through in only ONE direction and therefore protects laser systems against back reflection. It uses the Faraday magneto-optical effect to turn the polarization of light between various polarizers.
+        range: boolean
+        annotations:
+          limi_tier: 2
+      construction:
+        description: This field records the modality with which this PolarizationOptics is constructed.
+        range: LiMiPolarizationOpticsConstruction
+        annotations:
+          limi_tier: 2
+      retardation:
+        description: This field records the Phase shift that exists between the polarized light component projected along the fast axis and the part projected along the slow axis.
+        range: LiMiPolarizationOpticsRetardation
+        annotations:
+          limi_tier: 2
+      fabrication:
+        description: This field records the way in with which this PolarizationOptics is fabricated.
+        range: LiMiPolarizationOpticsFabrication
+        annotations:
+          limi_tier: 3
+      material_name:
+        description: This field records the chemical composition or designation of the Material this Polarization Optics is made of.
+        range: LiMiOpticalMaterial
+        annotations:
+          limi_tier: 3
+      glass_code:
+        description: If available, this field records the international Glass Code of the material that constitutes this Lens. The Glass Code designation is based on U.S. military standard MIL-G-174, and it consists of a six-digit number specifying the glass according to its Refractive Index nd at the Fraunhofer d- (or D3-) line, and its Abbe Number Vd also taken at that line. The resulting Glass Code is the value of nd-1 rounded to three digits, followed by Vd rounded to three digits, with all decimal points ignored. For example, BK7 has nd = 1.5168 and Vd = 64.17, giving a six-digit Glass Code of 517642.
+        annotations:
+          limi_tier: 3
+      wavelength_range:
+        description: This element records a range of Wavelengths this device is designed for, according to the Manufacturer. Multiple of this element may be used.
+        range: LiMiWavelengthRange
+        annotations:
+          limi_tier: 3
 
   ##########
   # Prisms #
@@ -1719,7 +1902,7 @@ enums:
       ? Chromatic and Curvature
       Coma:
       Curvature:
-      Distorsion:
+      Distortion:
       Spherical:
       Other:
 
@@ -1852,8 +2035,8 @@ enums:
     description: The modes imposed by the light guide onto the light traversing it
     #AK has made this up
     permissible_values:
-      Tranverse Electric:
-      Tranverse Electromagnetic:
+      Transverse Electric:
+      Transverse Electromagnetic:
       Transverse Magnetic:
       Hybrid:
       Other:
@@ -1878,7 +2061,7 @@ enums:
       Spherical:
       Other:
 
-  LiMiOpticalMaterialName:
+  LiMiOpticalMaterial:
     description: This field records the chemical composition or the designation of the substrate of this Mirroring Device.
     permissible_values:
       alpha-Barium Borate:
@@ -2015,6 +2198,76 @@ enums:
       Illumination control:
       Wavelength selection:
       Other:
+
+  LiMiLensShape:
+    description: This field records the shape of the profile of a Lens.
+    permissible_values:
+      Amici-Bertrand:
+      Biconvex:
+      Biconcave:
+      Plano Convex:
+      Plano Concave:
+      Convex Meniscus:
+      Concave Meniscus:
+      Equiconvex:
+      Other:
+
+  LiMiLensGeometry:
+    description: The geometrical shape of the lens's surface
+    permissible_values:
+      Spherical:
+      Aspherical:
+      Cylindrical:
+      Ball:
+      Hemispheric-ball:
+      Cone:
+      Drum:
+      Rod:
+      Toric:
+
+
+  LiMiPolarizationOpticsFunction:
+    description: This field records whether this Polarization Optics is used to generate (Polarizer) or to analyze (Analyzer) polarized light.
+    permissible_values:
+      Polarizer:
+      Analyzer:
+      Other:
+
+  LiMiPolarizationOpticsConstruction:
+    description: This field records the modality with which this PolarizationOptics is constructed.
+    permissible_values:
+      Achromatic:
+      Zero Order:
+      Multiple Order:
+      Other:
+
+  LiMiPolarizationOpticsRetardation:
+    description: This field records the Phase shift that exists between the polarized light component projected along the fast axis and the part projected along the slow axis.
+    permissible_values:
+      Full Wave:
+      Half Wave:
+      Quarter Wave:
+      Other:
+
+  LiMiPolarizationOpticsFabrication:
+    description: This field records the way in with which this Polarization Optics is fabricated.
+    permissible_values:
+      Birefringent:
+      Film:
+      Polarizing Beamsplitter:
+      Polarizing BandPass:
+      Polymer:
+      Quartz:
+      Variable:
+      Wire Grid:
+      Other:
+    notes:
+      - AK Some of these values seem to be mixing two different concepts
+
+
+
+
+
 
 
 
