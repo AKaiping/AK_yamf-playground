@@ -263,7 +263,7 @@ classes:
             limi_tier: 3
           required: true
         max_temperature_unit:
-          description: This field captures the unit associated with the value representing the maximum temperature that can be stably maintained by this Environmental Control Device.
+          description: Unit associated with the value representing the maximum temperature that can be stably maintained by this Environmental Control Device.
           range: LiMiTemperatureUnit
           ifabsent: LiMiTemperatureUnit(C)
           annotations:
@@ -276,7 +276,7 @@ classes:
             limi_tier: 3
           required: true
         min_temperature_unit:
-          description: This field captures the unit associated with the value representing the minimum temperature that can be stably maintained by this Environmental Control Device.
+          description: Unit associated with the value representing the minimum temperature that can be stably maintained by this Environmental Control Device.
           range: LiMiTemperatureUnit
           ifabsent: LiMiTemperatureUnit(C)
           annotations:
@@ -288,7 +288,7 @@ classes:
           annotations:
             limi_tier: 3
         temperature_accuracy_unit:
-          description: This field captures the unit associated with the temperature control accuracy provided by this Environmental Control Chamber
+          description: Unit associated with the temperature control accuracy provided by this Environmental Control Chamber
           range: LiMiTemperatureUnit
           ifabsent: LiMiTemperatureUnit(C)
           annotations:
@@ -465,7 +465,7 @@ classes:
         annotations:
           limi_tier: 3
       diameter_unit:
-        description: This fields records the unit associated with the value representing the outer diameter of this Light Guide.
+        description: Unit associated with the value representing the outer diameter of this Light Guide.
         range: LiMiLengthUnit
         ifabsent: LiMiLengthUnit(mm)
         annotations:
@@ -1513,7 +1513,7 @@ classes:
         annotations:
           limi_tier: 3
       angle_of_incidence_unit:
-        description: unit associated with the value representing an angle of incidence
+        description: Unit associated with the value representing an angle of incidence
         range: LiMiAngleUnit
         ifabsent: LiMiAngleUnit(deg)
         annotations:
@@ -1524,7 +1524,7 @@ classes:
         annotations:
           limi_tier: 3
       deviation_angle_unit:
-        description: unit associated with the value representing a deviation angle
+        description: Unit associated with the value representing a deviation angle
         range: LiMiAngleUnit
         ifabsent: LiMiAngleUnit(deg)
         annotations:
@@ -1535,7 +1535,7 @@ classes:
         annotations:
           limi_tier: 3
       prism_angle_unit:
-        description: unit associated with the value representing a prism angle
+        description: Unit associated with the value representing a prism angle
         range: LiMiAngleUnit
         ifabsent: LiMiAngleUnit(deg)
         annotations:
@@ -1629,7 +1629,104 @@ classes:
       - name
       - object_type
     attributes:
-      # Arnica to fill
+      # Arnica has filled
+      encoded:
+        description: This field describes whether a Sample Positioning Device is equipped with a system (i.e., encoder) to monitor movement and provide automatic positional feedback for high-precision operations, and it specifies the type of encoders it has.
+        range: LiMiSamplePositioningEncoder
+        required: true
+      motorized:
+        description: This field describes whether (True) or not (False) a Sample Positioning Device is fitted with a Motorized component (i.e., ball-screw drives or rack mechanisms, sometimes equipped with precision calibration) to primarily assist in the translational movement of the sample in the X and Y or Z directions. A Motorized Stage is also often referred to as a Scanning Stage.
+        range: boolean
+        required: true
+      z_max_velocity:
+        description: This field describes the maximum Z-axis Velocity at which a Sample Positioning Device is capable of moving.
+        range: float
+      z_max_valocity_unit:
+        description: Unit associated with a value describing the Z-max velocity of the sample positioning device
+        range: LiMiVelocityUnit
+        ifabsent: LiMiVelocityUnit(nm/s)
+      z_repeatability:
+        description: This field captures the expected Accuracy with which a Sample Positioning Device is capable of returning to a previously visited Z-axis Position, as specified by the Manufacturer. This metric is important for example for Tiling.
+        range: float
+        required: true
+      z_repeatability_unit:
+        description: Unit associated with a value representing repeatability of the sample positioning device in the Z- direction
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(nm)
+      z_travel_range:
+        description: This field describes the total range in the Z-axis that a Sample Positioning Device can travel.
+        range: float
+      z_travel_range_unit:
+        description: Unit associated with a value representing the travel range of a sample positioning device in the Z- direction
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(µm)
+      movement_axes:
+        description: This field describes the axes or combination of axes along which a Sample Positioning Device is capable of moving.
+        range: LiMiSpatialAxes
+        annotations:
+          limi_tier: 2
+        required: true
+      built_in:
+        description: This field indicates whether a Sample Positioning Device is built into the Microscope Stand (True) or it is removable and interchangeable (False).
+        range: boolean
+        annotations:
+          limi_tier: 2
+          required: true
+      z_reproducibility:
+        description: This field captures the expected precision with which a Sample Positioning Device is capable of maintaining a given Z-axis Position over time as specified by the Manufacturer. This metric is generally referred to as Reproducibility and it might also be referred to as Focal Drift. This metric is particularly relevant for Stereology systems and for the calibration of Sample Positioning devices.
+        range: float
+        annotations:
+          limi_tier: 2
+      z_reproducibility_unit:
+        description: Unit associated with a value representing the z reproducibility or focal drift of a sample positioning system
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(µm)
+        #AK made this default unit up
+        annotations:
+          limi_tier: 2
+      z_settling_time:
+        description: This field describes the expected time it takes for a Sample Positioning Device to stabilize at the target Z-axis position, as specified by the Manufacturer.
+        range: float
+        annotations:
+          limi_tier: 2
+      z_settling_time_unit:
+        description: Unit associated with the value representing the time taken by a sample positioning system to stabilize at a target Z- position
+        range: LiMiTimeUnit
+        ifabsent: LiMiTimeUnit(ms)
+        annotations:
+          limi_tier: 2
+      z_resolution:
+        description: This field describes the Z-axis motion Resolution of a Sample Positioning Device as specified by the Manufacturer.
+        range: float
+        annotations:
+          limi_tier: 2
+      z_resolution_unit:
+        description: Unit associated with a value representing the Z-resolution of the motion of a sample positioning device
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(nm)
+        annotations:
+          limi_tier: 2
+      z_position_linearity_error:
+        description: This field describes the Z-axis positioning error (typically expressed in % error) associated with a Sample Positioning Device as specified by the Manufacturer.
+        range: float
+        annotations:
+          limi_tier: 2
+      type:
+        description: This field describes the general category of a Sample Positioning Device.
+        range: LiMiSamplePositioningDevice
+        annotations:
+          limi_tier: 3
+      rotation_angle:
+        description: The angle by which a Sample Positioning Device is capable of rotating.
+        range: float
+        annotations:
+          limi_tier: 3
+      rotation_angle_unit:
+        description: Unit associated with the value representing the rotation angle of a sample positioning device
+        range: LiMiAngleUnit
+        ifabsent: LiMiAngleUnit(deg)
+        annotations:
+          limi_tier: 3
 
   LiMiFocusingDevice:
     description:
@@ -1680,7 +1777,86 @@ classes:
       rotation of the Sample in the X-, Y-, and Z-axes.
     is_a: LiMiSamplePositioningDevice
     attributes:
-      # Arnica to fill
+      # Arnica has filled
+      xy_max_velocity:
+        description: This field describes the maximum XY-axis Velocity at which a Stage is capable of moving.
+        range: float
+      xy_max_velocity_unit:
+        description: Unit associated with the maximum XY-axis velocity of a stage
+        range: LiMiVelocityUnit
+        ifabsent: LiMiVelocityUnit(nm/s)
+      xy_repeatability:
+        description: This field captures the expected accuracy with which a Stage is capable of returning to a previously visited XY-plane Position, as specified by the Manufacturer. This metric is important for example for Tiling.
+        range: float
+        required: true
+      xy_repeatability_unit:
+        description: Unit associated with a value representing repeatability of positioning of a stage in the XY- plane
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(nm)
+      x_travel_range:
+        description: This field describes the total range in the X-axis that a stage can travel.
+        range: float
+        required: true
+        annotations:
+          limi_tier: 2
+      x_travel_range_unit:
+        description: Unit associated with a value representing the travel range of a stage in the X- direction
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(µm)
+        required: true
+        annotations:
+          limi_tier: 2
+      y_travel_range:
+        description: This field describes the total range in the Y-axis that a Stage can travel.
+        range: float
+        required: true
+        annotations:
+          limi_tier: 2
+      y_travel_range_unit:
+        description: Unit associated with a value representing the travel range of a stage in the Y- direction
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(µm)
+        required: true
+        annotations:
+          limi_tier: 2
+      xy_reproducibility:
+        description: This field captures the expected Precision with which a Stage is capable of maintaining a given XY-plane Position over time during as specified by the Manufacturer. This metric is generally referred to as Reproducibility and it might also be referred to as Lateral Drift. This metric is particularly relevant for Stereology systems and for the calibration of Sample Positioning devices.
+        range: float
+        annotations:
+          limi_tier: 2
+      xy_reproducibility_unit:
+        description: Unit associated with a value representing the XY reproducibility of a stage
+        range: LiMiLengthUnit
+        ifabsent: LiMiLengthUnit(µm)
+        annotations:
+          limi_tier: 2
+        xy_settling_time:
+          description: This field describes the expected time it takes for a Stage to stabilize at the target XY-plane position, as specified by the Manufacturer.
+          range: float
+          annotations:
+            limi_tier: 2
+        xy_settling_time_unit:
+          description: Unit associated with the value representing the time taken by a stage to stabilize at a target XY-plane position
+          range: LiMiTimeUnit
+          ifabsent: LiMiTimeUnit(ms)
+          annotations:
+            limi_tier: 2
+        xy_resolution:
+          description: This field describes the XY-plane motion Resolution of a Stage as specified by the Manufacturer.
+          range: float
+          annotations:
+            limi_tier: 2
+        xy_resolution_unit:
+          description: Unit associated with a value representing the XY-resolution of the motion of a stage
+          range: LiMiLengthUnit
+          ifabsent: LiMiLengthUnit(nm)
+          annotations:
+            limi_tier: 2
+        xy_position_linearity_error:
+          description: This field describes the XY-axis positioning error (typically expressed in % error) associated with a Stage as specified by the Manufacturer.
+          range: float
+          annotations:
+            limi_tier: 2
 
   LiMiMechanicalStage:
     description:
@@ -2399,7 +2575,7 @@ enums:
       None:
 
   LiMiPrismFunction:
-    description: his field records the function of this prism.
+    description: This field records the function of this prism.
     permissible_values:
       Beam-shaping:
       Deflecting:
@@ -2437,13 +2613,45 @@ enums:
       Other:
 
   LiMiSampleHolderType:
-    description:
+    description: Available types of sample holders
     permissible_values:
       Chambered Coverslip:
       Culture Plate:
       Microscope Slide:
       Multiwell Plate:
       Petridish:
+      Other:
+
+  LiMiSamplePositioningEncoder:
+    description: Available encoder types to monitor movement of a sample positioning device and provide positional feedback
+    permissible_values:
+      None:
+      Linear:
+      Rotary:
+      Other:
+
+  LiMiSpatialAxes:
+    description: Available values to describe the unit of a value that represents a spatial axis
+    permissible_values:
+      X:
+      Y:
+      Z:
+      XY:
+      XZ:
+      YZ:
+      XYZ:
+
+  LiMiSamplePositioningDevice:
+    description: Available sample positioning devices
+    permissible_values:
+      Centering:
+      DC Servo Motor:
+      Gliding:
+      Levelling:
+      Linear:
+      Rigid Stand:
+      Stepper:
+      Translational:
       Other:
 
 
